@@ -1,6 +1,6 @@
 {
   "name": "knowpedia",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0-alpha.1",
   "description": "为knowpedia项目定制的前端框架。",
   "main": "knowpedia.js",
   "repository": {
