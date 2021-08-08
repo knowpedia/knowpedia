@@ -1,0 +1,22 @@
+{
+  "name": "knowpedia",
+  "version": "0.1.0-alpha",
+  "description": "为knowpedia项目定制的前端框架。",
+  "main": "knowpedia.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knowpedia/knowpedia.git"
+  },
+  "keywords": [
+    "knowpedia"
+  ],
+  "author": "你好2007",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/knowpedia/knowpedia/issues"
+  },
+  "homepage": "https://github.com/knowpedia/knowpedia",
+  "dependencies": {
+    "quick-paper": "^0.6.0"
+  }
+}
