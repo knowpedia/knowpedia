@@ -1,6 +1,6 @@
 {
   "name": "knowpedia",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0",
   "description": "为knowpedia项目定制的前端框架。",
   "main": "knowpedia.js",
   "repository": {
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/knowpedia/knowpedia/issues"
   },
-  "homepage": "https://github.com/knowpedia/knowpedia",
+  "homepage": "https://github.com/knowpedia/knowpedia#readme",
   "dependencies": {
     "quick-paper": "^0.6.0"
   }
