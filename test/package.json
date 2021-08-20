@@ -1,6 +1,6 @@
 {
   "name": "knowpedia-test",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "knowpedia测试项目",
   "scripts": {
     "start": "npm install && npm run dev",
@@ -29,6 +29,6 @@
   "dependencies": {
     "@hai2007/polyfill": "^0.1.1",
     "@hai2007/style": "^0.2.3",
-    "knowpedia": "0.1.0"
+    "knowpedia": "0.2.0-alpha.1"
   }
 }

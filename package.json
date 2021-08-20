@@ -1,22 +1,39 @@
 {
   "name": "knowpedia",
-  "version": "0.1.0",
+  "version": "0.2.0-alpha.1",
   "description": "为knowpedia项目定制的前端框架。",
-  "main": "knowpedia.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/knowpedia/knowpedia.git"
+  "main": "dist/knowpedia.min.js",
+  "scripts": {
+    "start": "npm install && npm run dev",
+    "dev": "rollup --config rollup.config.js -i ./src/index.js -o ./dist/knowpedia.js --watch",
+    "build": "hai2007_nodejs -d dist && rollup --config rollup.config.js && terser ./dist/knowpedia.js -o ./dist/knowpedia.min.js && hai2007_nodejs --config script.config.js"
   },
   "keywords": [
     "knowpedia"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knowpedia/knowpedia.git"
+  },
   "author": "你好2007",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/knowpedia/knowpedia/issues"
   },
   "homepage": "https://github.com/knowpedia/knowpedia#readme",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@hai2007/nodejs": "^1.0.1",
+    "@rollup/plugin-babel": "^5.2.1",
+    "rollup": "^1.17.0",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "terser": "^4.1.2"
+  },
   "dependencies": {
+    "@hai2007/tool": "^0.9.0",
+    "cross-end-canvas": "^0.1.0",
     "quick-paper": "^0.6.0"
   }
 }
