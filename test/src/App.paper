@@ -1,24 +1,50 @@
 <template>
 
+    <h2>数学格式</h2>
+    <div>
+
+        <i>
+            基本的：
+        </i>
+
+        <span kp-math-formula="mathFormulas.gen"></span>
+        <span kp-math-formula="mathFormulas.limt"></span>
+
+        <i>
+            简单组合：
+        </i>
+
+        <span kp-math-formula="mathFormulas.gen_limt"></span>
+
+    </div>
 </template>
 <script>
 
     export default {
         data() {
             return {
-
+                mathFormulas: {}
             };
         },
         mounted() {
+            this.mathFormulas = {
 
-        },
-        methods: {
+                // 基本的
+                gen: this.$mathFormula.gen("(x+1)*y"),
+                limt: this.$mathFormula.limt("x->10", "(10x+1)*z"),// x趋向10的时候x+1值
 
+                // 简单组合
+                gen_limt: this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y"))
+            };
         }
     };
 </script>
 <style lang="scss">
     [quickpaper] {
+        padding: 30px;
 
+        &>h2 {
+            padding: 20px 0;
+        }
     }
 </style>

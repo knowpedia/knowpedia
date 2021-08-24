@@ -1,6 +1,6 @@
 {
   "name": "knowpedia",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0",
   "description": "为knowpedia项目定制的前端框架。",
   "main": "dist/knowpedia.min.js",
   "scripts": {
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@hai2007/tool": "^0.9.0",
-    "cross-end-canvas": "^0.1.0",
+    "cross-end-canvas": "^0.1.1",
     "quick-paper": "^0.6.0"
   }
 }

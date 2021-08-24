@@ -9,7 +9,7 @@ import Knowpedia from 'quick-paper/dist/quick-paper.core.min.js';
 import kpMathFormula from './directive/kp-math-formula'; Knowpedia.directive("kpMathFormula", kpMathFormula);
 
 // 意图捕获方法集
-import mathFormula from './method/mathFormula'; Knowpedia.prototype.mathFormula = mathFormula;
+import mathFormula from './method/mathFormula'; Knowpedia.prototype.$mathFormula = mathFormula;
 
 /**
  * 导出

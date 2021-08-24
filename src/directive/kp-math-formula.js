@@ -1,5 +1,6 @@
 
 import CrossEndCanvas from 'cross-end-canvas';
+import config from '../config';
 
 let doit = (el, binding) => {
 
@@ -9,14 +10,67 @@ let doit = (el, binding) => {
     // 获取需要绘制的式子的数据
     let mathFormulaData = binding.value;
 
+    if (!mathFormulaData) return;
+
     // 设置画布大小并插入页面
-    el.innerHTML = "<canvas id='" + id + "' style='width:" + mathFormulaData.width + "px;height:" + mathFormulaData.height + "px'>非常抱歉，您的浏览器不支持canvas!</canvas>";
+    el.innerHTML = "<canvas id='" + id + "' style='width:" + mathFormulaData.width + "px;height:" + mathFormulaData.height + "px;vertical-align: middle;'>非常抱歉，您的浏览器不支持canvas!</canvas>";
 
     // 建立绘图对象
     CrossEndCanvas({ id, platform: 'web' }).then(function (painter) {
 
-        // 拿到画笔后就可以开始绘制了
-        console.log(painter, mathFormulaData);
+        // 统一配置画笔
+        painter.config({
+            "textAlign": "center",
+            "textBaseline": "middle",
+            "font-size": config.mathFormula['font-size']
+        });
+
+        let drawFormula = (x, y, data) => {
+
+            switch (data.type) {
+
+                case "string": {
+                    painter.fillText(data.contents[0], x + data.width * 0.5, y + data.height * 0.5);
+                    break;
+                }
+
+                case "gen": {
+
+                    // 先绘制根号下的表达式
+                    drawFormula(x + 5 + config.mathFormula['padding-size'], y + config.mathFormula['padding-size'], data.contents[0]);
+
+                    // 然后绘制根号
+                    painter.beginPath()
+                        .lineTo(x + config.mathFormula['padding-size'], y + data.height - config.mathFormula['padding-size'])
+                        .lineTo(x + config.mathFormula['padding-size'] + 2.5, y + data.height - config.mathFormula['padding-size'] - 2.5)
+                        .lineTo(x + config.mathFormula['padding-size'] + 5, y + data.height - config.mathFormula['padding-size'])
+                        .lineTo(x + config.mathFormula['padding-size'] + 5, y + config.mathFormula['padding-size'] * 0.5)
+                        .lineTo(x + data.width - config.mathFormula['padding-size'], y + config.mathFormula['padding-size'] * 0.5)
+                        .stroke();
+
+                    break;
+                }
+                case "limt": {
+
+                    // 先绘制极限文字和趋势
+                    painter.fillText("limt", x + config.mathFormula['padding-size'] + data._help.leftWidth * 0.5, y + config.mathFormula['padding-size'] + data._help.limtSize.height * 0.5);
+                    drawFormula(x + config.mathFormula['padding-size'], y + data._help.limtSize.height + config.mathFormula['padding-size'], data.contents[0]);
+
+                    // 然后绘制表达式
+                    drawFormula(x + config.mathFormula['padding-size'] + data._help.leftWidth, y, data.contents[1]);
+
+                    break;
+                }
+                default: {
+                    console.error('未匹配的数据格式：');
+                    console.error(x, y, data);
+                }
+
+            }
+
+        };
+
+        drawFormula(0, 0, mathFormulaData);
 
     });
 
