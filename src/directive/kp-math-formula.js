@@ -1,7 +1,6 @@
 
 import CrossEndCanvas from 'cross-end-canvas';
 import config from '../config';
-import { isArray } from '@hai2007/tool/type'
 
 let doit = (el, binding) => {
 
