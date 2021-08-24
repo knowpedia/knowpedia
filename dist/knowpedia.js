@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.2.0
+ * version 0.2.1
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Tue Aug 24 2021 11:45:45 GMT+0800 (中国标准时间)
+ * Date:Tue Aug 24 2021 17:57:59 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -26,6 +26,80 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+
+  if (!it) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = it.call(o);
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
 }
 
 function createCommonjsModule(fn, module) {
@@ -1072,9 +1146,40 @@ var config = {
   }
 };
 
+var toString = Object.prototype.toString;
+/**
+ * 获取一个值的类型字符串[object type]
+ *
+ * @param {*} value 需要返回类型的值
+ * @returns {string} 返回类型字符串
+ */
+
+function getType (value) {
+  if (value == null) {
+    return value === undefined ? '[object Undefined]' : '[object Null]';
+  }
+
+  return toString.call(value);
+}
+
+/**
+ * 判断一个值是不是String。
+ *
+ * @param {*} value 需要判断类型的值
+ * @returns {boolean} 如果是String返回true，否则返回false
+ */
+
+function _isString (value) {
+  var type = _typeof(value);
+
+  return type === 'string' || type === 'object' && value != null && !Array.isArray(value) && getType(value) === '[object String]';
+}
+
+var isString = _isString;
+
 var doit = function doit(el, binding) {
   // 随机生成唯一标志
-  var id = "kp-math-formula-id-" + (Math.random() * 1000000).toFixed(0); // 获取需要绘制的式子的数据
+  var id = "kp-math-formula-id-" + (Math.random() * 100000000000).toFixed(0); // 获取需要绘制的式子的数据
 
   var mathFormulaData = binding.value;
   if (!mathFormulaData) return; // 设置画布大小并插入页面
@@ -1116,6 +1221,38 @@ var doit = function doit(el, binding) {
             drawFormula(x + config.mathFormula['padding-size'], y + data._help.limtSize.height + config.mathFormula['padding-size'], data.contents[0]); // 然后绘制表达式
 
             drawFormula(x + config.mathFormula['padding-size'] + data._help.leftWidth, y, data.contents[1]);
+            break;
+          }
+
+        case "sum":
+          {
+            // 先绘制左边的，从下到上
+            drawFormula(x + data._help.leftWidth * 0.5 - data._help.p1Width * 0.5 + config.mathFormula["padding-size"], y + data.height * 0.5 + 10 + config.mathFormula["padding-size"], data.contents[0]);
+            painter.beginPath().lineTo(x + data._help.leftWidth * 0.5 + 10 + config.mathFormula["padding-size"], y + data.height * 0.5 - 10 + config.mathFormula["padding-size"]).lineTo(x + data._help.leftWidth * 0.5 - 10 + config.mathFormula["padding-size"], y + data.height * 0.5 - 10 + config.mathFormula["padding-size"]).lineTo(x + data._help.leftWidth * 0.5 + 7 + config.mathFormula["padding-size"], y + data.height * 0.5 + config.mathFormula["padding-size"]).lineTo(x + data._help.leftWidth * 0.5 - 10 + config.mathFormula["padding-size"], y + data.height * 0.5 + 10 + config.mathFormula["padding-size"]).lineTo(x + data._help.leftWidth * 0.5 + 10 + config.mathFormula["padding-size"], y + data.height * 0.5 + 10 + config.mathFormula["padding-size"]).stroke();
+            drawFormula(x + data._help.leftWidth * 0.5 - data._help.p2Width * 0.5 + config.mathFormula["padding-size"], y + data.height * 0.5 - 10 - data._help.p2Height + config.mathFormula["padding-size"], data.contents[1]); // 然后绘制右边的
+
+            drawFormula(x + data._help.leftWidth + config.mathFormula["padding-size"], y + data.height * 0.5 - data._help.rightHeight * 0.5, data.contents[2]);
+            break;
+          }
+
+        case "join":
+          {
+            // 从左到右，一个个绘制即可
+            var _iterator = _createForOfIteratorHelper(data.contents),
+                _step;
+
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                var item = _step.value;
+                drawFormula(x + config.mathFormula["padding-size"], y - item.height * 0.5 + data.height * 0.5, item);
+                x += item.width;
+              }
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
+            }
+
             break;
           }
 
@@ -1435,37 +1572,6 @@ function calcSize (texts) {
   return xhtml.size(helpHidden);
 }
 
-var toString = Object.prototype.toString;
-/**
- * 获取一个值的类型字符串[object type]
- *
- * @param {*} value 需要返回类型的值
- * @returns {string} 返回类型字符串
- */
-
-function getType (value) {
-  if (value == null) {
-    return value === undefined ? '[object Undefined]' : '[object Null]';
-  }
-
-  return toString.call(value);
-}
-
-/**
- * 判断一个值是不是String。
- *
- * @param {*} value 需要判断类型的值
- * @returns {boolean} 如果是String返回true，否则返回false
- */
-
-function _isString (value) {
-  var type = _typeof(value);
-
-  return type === 'string' || type === 'object' && value != null && !Array.isArray(value) && getType(value) === '[object String]';
-}
-
-var isString = _isString;
-
 /**
  * 用于捕获用户意图的一系列方法
  */
@@ -1520,6 +1626,52 @@ var mathFormula = {
         limtSize: limtSize,
         leftWidth: p1Obj.width
       }
+    };
+  },
+  // 求和
+  sum: function sum(p1, p2, p3) {
+    var p1Obj = formatBasic(p1);
+    var p2Obj = formatBasic(p2);
+    var p3Obj = formatBasic(p3);
+    var leftWidth = Math.max(p1Obj.width, p2Obj.width, 20);
+    return {
+      width: leftWidth + p3Obj.width + config.mathFormula["padding-size"] * 2,
+      height: Math.max(Math.max(p1Obj.height, p2Obj.height) * 2 + 20, p3Obj.height) + config.mathFormula["padding-size"] * 2,
+      contents: [p1Obj, p2Obj, p3Obj],
+      type: "sum",
+      _help: {
+        leftWidth: leftWidth,
+        p1Height: p1Obj.height,
+        p1Width: p1Obj.width,
+        p2Height: p2Obj.height,
+        p2Width: p2Obj.width,
+        rightHeight: p3Obj.height
+      }
+    };
+  },
+  // 拼接组合
+  join: function join() {
+    var pxObjs = [],
+        width = 0,
+        height = 0;
+
+    for (var _len = arguments.length, px = new Array(_len), _key = 0; _key < _len; _key++) {
+      px[_key] = arguments[_key];
+    }
+
+    for (var _i = 0, _px = px; _i < _px.length; _i++) {
+      var p = _px[_i];
+      var pxObj = formatBasic(p);
+      pxObjs.push(pxObj);
+      width += pxObj.width;
+      height = pxObj.height > height ? pxObj.height : height;
+    }
+
+    return {
+      width: width + config.mathFormula["padding-size"] * 2,
+      height: height + config.mathFormula["padding-size"] * 2,
+      contents: pxObjs,
+      type: "join"
     };
   }
 };

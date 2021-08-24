@@ -63,8 +63,54 @@ let mathFormula = {
             type: 'limt',
             _help: {
                 limtSize,
-                leftWidth:p1Obj.width
+                leftWidth: p1Obj.width
             }
+        };
+
+    },
+
+    // 求和
+    sum(p1, p2, p3) {
+
+        let p1Obj = formatBasic(p1);
+        let p2Obj = formatBasic(p2);
+        let p3Obj = formatBasic(p3);
+
+        let leftWidth = Math.max(p1Obj.width, p2Obj.width, 20);
+
+        return {
+            width: leftWidth + p3Obj.width + config.mathFormula["padding-size"] * 2,
+            height: Math.max(Math.max(p1Obj.height, p2Obj.height) * 2 + 20, p3Obj.height) + config.mathFormula["padding-size"] * 2,
+            contents: [p1Obj, p2Obj, p3Obj],
+            type: "sum",
+            _help: {
+                leftWidth,
+                p1Height: p1Obj.height,
+                p1Width: p1Obj.width,
+                p2Height: p2Obj.height,
+                p2Width: p2Obj.width,
+                rightHeight: p3Obj.height
+            }
+        };
+
+    },
+
+    // 拼接组合
+    join(...px) {
+        let pxObjs = [], width = 0, height = 0;
+        for (let p of px) {
+            let pxObj = formatBasic(p);
+            pxObjs.push(pxObj);
+
+            width += pxObj.width;
+            height = pxObj.height > height ? pxObj.height : height;
+        }
+
+        return {
+            width: width + config.mathFormula["padding-size"] * 2,
+            height: height + config.mathFormula["padding-size"] * 2,
+            contents: pxObjs,
+            type: "join"
         };
 
     }

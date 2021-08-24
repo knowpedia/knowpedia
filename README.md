@@ -52,6 +52,14 @@ data(){
 
 下面列举出所有『公式生成方法』：
 
+- 拼接
+
+```js
+// 从左到右，拼接起来
+this.$mathFormula.join(...p);
+```
+
+
 - 根号
 
 ```js
@@ -63,6 +71,13 @@ this.$mathFormula.gen(p1);
 ```js
 // p1表示趋向，p2是计算结果的表达式
 this.$mathFormula.limt(p1,p2);
+```
+
+- 求和
+
+```js
+// p1表示开始，p2是结束的值，p3是需要求和的表达式
+this.$mathFormula.sum(p1,p2,p3);
 ```
 
 开源协议

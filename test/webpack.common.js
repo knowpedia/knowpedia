@@ -7,11 +7,11 @@ module.exports = {
         path: __dirname,
         filename: 'build/main.js'
     },
-    // resolve: {
-    //     alias: {
-    //         'knowpedia': path.resolve('../dist/knowpedia.js')
-    //     }
-    // },
+    resolve: {
+        alias: {
+            'knowpedia': path.resolve('../dist/knowpedia.js')
+        }
+    },
     module: {
         rules: [{
             test: /\.js$/,

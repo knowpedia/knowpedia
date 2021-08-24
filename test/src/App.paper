@@ -9,12 +9,20 @@
 
         <span kp-math-formula="mathFormulas.gen"></span>
         <span kp-math-formula="mathFormulas.limt"></span>
+        <span kp-math-formula="mathFormulas.sum"></span>
 
         <i>
             简单组合：
         </i>
 
         <span kp-math-formula="mathFormulas.gen_limt"></span>
+        <span kp-math-formula="mathFormulas.gen_sum"></span>
+
+        <i>
+            拼接组合：
+        </i>
+
+        <span kp-math-formula="mathFormulas.array"></span>
 
     </div>
 </template>
@@ -32,9 +40,14 @@
                 // 基本的
                 gen: this.$mathFormula.gen("(x+1)*y"),
                 limt: this.$mathFormula.limt("x->10", "(10x+1)*z"),// x趋向10的时候x+1值
+                sum: this.$mathFormula.sum("i=0", '90', '(x+1)'),
 
                 // 简单组合
-                gen_limt: this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y"))
+                gen_limt: this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")),
+                gen_sum: this.$mathFormula.sum("n=0", "100", this.$mathFormula.gen(this.$mathFormula.sum("i=0", '90', '(x+1)'))),
+
+                // 拼接组合
+                array: this.$mathFormula.join('x', "+", this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")))
             };
         }
     };

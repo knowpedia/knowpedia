@@ -1,11 +1,12 @@
 
 import CrossEndCanvas from 'cross-end-canvas';
 import config from '../config';
+import { isArray } from '@hai2007/tool/type'
 
 let doit = (el, binding) => {
 
     // 随机生成唯一标志
-    let id = "kp-math-formula-id-" + ((Math.random() * 1000000).toFixed(0));
+    let id = "kp-math-formula-id-" + ((Math.random() * 100000000000).toFixed(0));
 
     // 获取需要绘制的式子的数据
     let mathFormulaData = binding.value;
@@ -58,6 +59,34 @@ let doit = (el, binding) => {
 
                     // 然后绘制表达式
                     drawFormula(x + config.mathFormula['padding-size'] + data._help.leftWidth, y, data.contents[1]);
+
+                    break;
+                }
+                case "sum": {
+
+                    // 先绘制左边的，从下到上
+                    drawFormula(x + data._help.leftWidth * 0.5 - data._help.p1Width * 0.5 + config.mathFormula["padding-size"], y + data.height * 0.5 + 10 + config.mathFormula["padding-size"], data.contents[0]);
+                    painter.beginPath()
+                        .lineTo(x + data._help.leftWidth * 0.5 + 10 + config.mathFormula["padding-size"], y + data.height * 0.5 - 10 + config.mathFormula["padding-size"])
+                        .lineTo(x + data._help.leftWidth * 0.5 - 10 + config.mathFormula["padding-size"], y + data.height * 0.5 - 10 + config.mathFormula["padding-size"])
+                        .lineTo(x + data._help.leftWidth * 0.5 + 7 + config.mathFormula["padding-size"], y + data.height * 0.5 + config.mathFormula["padding-size"])
+                        .lineTo(x + data._help.leftWidth * 0.5 - 10 + config.mathFormula["padding-size"], y + data.height * 0.5 + 10 + config.mathFormula["padding-size"])
+                        .lineTo(x + data._help.leftWidth * 0.5 + 10 + config.mathFormula["padding-size"], y + data.height * 0.5 + 10 + config.mathFormula["padding-size"])
+                        .stroke();
+                    drawFormula(x + data._help.leftWidth * 0.5 - data._help.p2Width * 0.5 + config.mathFormula["padding-size"], y + data.height * 0.5 - 10 - data._help.p2Height + config.mathFormula["padding-size"], data.contents[1]);
+
+                    // 然后绘制右边的
+                    drawFormula(x + data._help.leftWidth + config.mathFormula["padding-size"], y + data.height * 0.5 - data._help.rightHeight * 0.5, data.contents[2]);
+
+                    break;
+                }
+                case "join": {
+
+                    // 从左到右，一个个绘制即可
+                    for (let item of data.contents) {
+                        drawFormula(x + config.mathFormula["padding-size"], y - item.height * 0.5 + data.height * 0.5, item);
+                        x += item.width;
+                    }
 
                     break;
                 }
