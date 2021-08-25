@@ -21,6 +21,7 @@
         <span kp-math-formula="mathFormulas.gen_limt"></span>
         <span kp-math-formula="mathFormulas.gen_sum"></span>
         <span kp-math-formula="mathFormulas.gen_matrix"></span>
+
         <i>
             拼接组合：
         </i>
@@ -29,6 +30,15 @@
         <span kp-math-formula="mathFormulas['bracket-small']"></span>
         <span kp-math-formula="mathFormulas['bracket-middle']"></span>
         <span kp-math-formula="mathFormulas['bracket-big']"></span>
+
+        <i>
+            特殊位置：
+        </i>
+
+        <span kp-math-formula="mathFormulas.rightTop"></span>
+        <span kp-math-formula="mathFormulas.rightBottom"></span>
+        <span kp-math-formula="mathFormulas.rightTop2"></span>
+        <span kp-math-formula="mathFormulas.rightBottom2"></span>
 
     </div>
 </template>
@@ -82,6 +92,18 @@
                     [1, this.$mathFormula.gen("(x+1)*y")],
                     [0, 1]
                 ]), "+10"), 'big'),
+
+                // 特殊位置
+                rightTop: this.$mathFormula.rightTop("X", 2),
+                rightBottom: this.$mathFormula.rightBottom("A", "x"),
+                rightTop2: this.$mathFormula.rightTop(this.$mathFormula.matrix([
+                    [1, this.$mathFormula.gen("(x+1)*y")],
+                    [0, 1]
+                ]), this.$mathFormula.limt("x->10", "(10x+1)*z")),
+                rightBottom2: this.$mathFormula.rightBottom(this.$mathFormula.matrix([
+                    [1, this.$mathFormula.gen("(x+1)*y")],
+                    [0, 1]
+                ]), this.$mathFormula.limt("x->10", "(10x+1)*z")),
             };
         }
     };

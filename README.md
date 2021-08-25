@@ -103,13 +103,20 @@ this.$mathFormula.division(p1, p2);
 this.$mathFormula.bracket(p1, p2);
 ```
 
+- 特殊位置
+
+```js
+this.$mathFormula.rightTop(p1, p2);// p2在右上角
+this.$mathFormula.rightBottom(p1, p2);// p2在右下角
+```
+
 ## 特殊符号
 
 |||||||||||
 |-|-|-|-|-|-|-|-|-|-|
 |α|β|γ|δ|ε|≫|≪|ζ|η|θ|
-|ι|λ|μ|ν|π|ξ|ζ|υ|≥|≤|
-|χ|ψ|ω|∞|∉|∈|||||
+|ι|λ|μ|ν|π|ξ|∞|υ|≥|≤|
+|χ|ψ|ω|∉|∈||||||
 |||||||||||
 
 开源协议

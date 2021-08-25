@@ -217,6 +217,20 @@ let doit = (el, binding) => {
 
                     break;
                 }
+                case "rightTop": {
+
+                    drawFormula(x + 0.5 * config.mathFormula["padding-size"], y + data.height - data._help.p1Height - config.mathFormula["padding-size"], data.contents[0]);
+                    drawFormula(x - 1.5 * config.mathFormula["padding-size"] + data._help.p1Width, y + 0.5 * config.mathFormula["padding-size"], data.contents[1]);
+
+                    break;
+                }
+                case "rightBottom": {
+
+                    drawFormula(x + 0.5 * config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.contents[0]);
+                    drawFormula(x - 1.5 * config.mathFormula["padding-size"] + data._help.p1Width, y + data.height - 0.5 * config.mathFormula["padding-size"] - data._help.p2Height, data.contents[1]);
+
+                    break;
+                }
                 default: {
                     console.error('未匹配的数据格式：');
                     console.error(x, y, data);

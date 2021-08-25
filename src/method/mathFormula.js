@@ -204,6 +204,41 @@ let mathFormula = {
             }
         };
 
+    },
+
+    // 特殊位置
+    rightTop(p1, p2) {
+
+        let p1Obj = formatBasic(p1);
+        let p2Obj = formatBasic(p2);
+
+        return {
+            width: p1Obj.width + p2Obj.width - config.mathFormula["padding-size"] * 2,
+            height: p1Obj.height + p2Obj.height - config.mathFormula["padding-size"] * 2 - 5,
+            contents: [p1Obj, p2Obj],
+            type: "rightTop",
+            _help: {
+                p1Width: p1Obj.width,
+                p1Height: p1Obj.height
+            }
+        };
+
+    },
+    rightBottom(p1, p2) {
+
+        let p1Obj = formatBasic(p1);
+        let p2Obj = formatBasic(p2);
+
+        return {
+            width: p1Obj.width + p2Obj.width - config.mathFormula["padding-size"] * 2,
+            height: p1Obj.height + p2Obj.height - config.mathFormula["padding-size"] * 2 - 5,
+            contents: [p1Obj, p2Obj],
+            type: "rightBottom",
+            _help: {
+                p1Width: p1Obj.width,
+                p2Height: p2Obj.height
+            }
+        };
     }
 
 };

@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.2.4
+ * version 0.2.5
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Wed Aug 25 2021 16:51:19 GMT+0800 (中国标准时间)
+ * Date:Wed Aug 25 2021 17:46:47 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1280,6 +1280,20 @@ var doit = function doit(el, binding) {
             break;
           }
 
+        case "rightTop":
+          {
+            drawFormula(x + 0.5 * config.mathFormula["padding-size"], y + data.height - data._help.p1Height - config.mathFormula["padding-size"], data.contents[0]);
+            drawFormula(x - 1.5 * config.mathFormula["padding-size"] + data._help.p1Width, y + 0.5 * config.mathFormula["padding-size"], data.contents[1]);
+            break;
+          }
+
+        case "rightBottom":
+          {
+            drawFormula(x + 0.5 * config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.contents[0]);
+            drawFormula(x - 1.5 * config.mathFormula["padding-size"] + data._help.p1Width, y + data.height - 0.5 * config.mathFormula["padding-size"] - data._help.p2Height, data.contents[1]);
+            break;
+          }
+
         default:
           {
             console.error('未匹配的数据格式：');
@@ -1835,6 +1849,35 @@ var mathFormula = {
       type: "bracket",
       _help: {
         type: p2
+      }
+    };
+  },
+  // 特殊位置
+  rightTop: function rightTop(p1, p2) {
+    var p1Obj = formatBasic(p1);
+    var p2Obj = formatBasic(p2);
+    return {
+      width: p1Obj.width + p2Obj.width - config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height + p2Obj.height - config.mathFormula["padding-size"] * 2 - 5,
+      contents: [p1Obj, p2Obj],
+      type: "rightTop",
+      _help: {
+        p1Width: p1Obj.width,
+        p1Height: p1Obj.height
+      }
+    };
+  },
+  rightBottom: function rightBottom(p1, p2) {
+    var p1Obj = formatBasic(p1);
+    var p2Obj = formatBasic(p2);
+    return {
+      width: p1Obj.width + p2Obj.width - config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height + p2Obj.height - config.mathFormula["padding-size"] * 2 - 5,
+      contents: [p1Obj, p2Obj],
+      type: "rightBottom",
+      _help: {
+        p1Width: p1Obj.width,
+        p2Height: p2Obj.height
       }
     };
   }
