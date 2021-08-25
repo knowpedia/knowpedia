@@ -4,11 +4,11 @@
  */
 
 import calcSize from "../tool/calcSize";
-import { isString } from "@hai2007/tool/type";
+import { isString, isNumber } from "@hai2007/tool/type";
 import config from '../config';
 
 let formatBasic = p1 => {
-    if (isString(p1)) {
+    if (isString(p1) || isNumber(p1)) {
         let contentSize = calcSize(p1);
         return {
             width: contentSize.width + config.mathFormula["padding-size"] * 2,
@@ -111,6 +111,78 @@ let mathFormula = {
             height: height + config.mathFormula["padding-size"] * 2,
             contents: pxObjs,
             type: "join"
+        };
+
+    },
+
+    // 矩阵和行列式
+    matrix(p1, p2) {
+
+        let pxObjs = [];
+
+        // 分别用于记录当前行最高多少和当前列最宽多少
+        let rowMax = [], colMax = [];
+        for (let i in p1) rowMax[i] = 0;
+        for (let j in p1[0]) colMax[j] = 0;
+
+        for (let i in p1) {
+            let rowPxObjs = [], row = p1[i];
+            for (let j in row) {
+                let col = row[j];
+                let colPxObj = formatBasic(col);
+                rowPxObjs.push(colPxObj);
+
+                // 校对行和列的最值
+                if (rowMax[i] < colPxObj.height) rowMax[i] = colPxObj.height;
+                if (colMax[j] < colPxObj.width) colMax[j] = colPxObj.width;
+
+            }
+            pxObjs.push(rowPxObjs);
+        }
+
+        // 计算得出宽和高
+        let width = 0, height = 0;
+        for (let value of rowMax) height += value;
+        for (let value of colMax) width += value;
+
+        // 计算中心位置
+        let rowCenter = [], colCenter = [];
+        rowCenter[0] = config.mathFormula["padding-size"] + rowMax[0] * 0.5;
+        colCenter[0] = config.mathFormula["padding-size"] + colMax[0] * 0.5 + 10;
+
+        for (let i = 1; i < rowMax.length; i++) {
+            rowCenter[i] = rowCenter[i - 1] + (rowMax[i - 1] + rowMax[i]) * 0.5;
+        }
+
+        for (let j = 1; j < colMax.length; j++) {
+            colCenter[j] = colCenter[j - 1] + (colMax[j - 1] + colMax[j]) * 0.5;
+        }
+
+        return {
+            width: width + config.mathFormula["padding-size"] * 2 + 20,
+            height: height + config.mathFormula["padding-size"] * 2,
+            contents: pxObjs,
+            type: "matrix",
+            _help: {
+                isHLS: p2,
+                rowCenter,
+                colCenter
+            }
+        };
+
+    },
+
+    // 除
+    division(p1, p2) {
+
+        let p1Obj = formatBasic(p1);
+        let p2Obj = formatBasic(p2);
+
+        return {
+            width: Math.max(p1Obj.width, p2Obj.width) + config.mathFormula["padding-size"] * 2,
+            height: p1Obj.height + p2Obj.height + 2 + config.mathFormula["padding-size"] * 2,
+            contents: [p1Obj, p2Obj],
+            type: "division"
         };
 
     }

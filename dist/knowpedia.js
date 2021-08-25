@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.2.1
+ * version 0.2.2
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Tue Aug 24 2021 17:57:59 GMT+0800 (中国标准时间)
+ * Date:Wed Aug 25 2021 11:32:00 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1146,40 +1146,11 @@ var config = {
   }
 };
 
-var toString = Object.prototype.toString;
-/**
- * 获取一个值的类型字符串[object type]
- *
- * @param {*} value 需要返回类型的值
- * @returns {string} 返回类型字符串
- */
-
-function getType (value) {
-  if (value == null) {
-    return value === undefined ? '[object Undefined]' : '[object Null]';
-  }
-
-  return toString.call(value);
-}
-
-/**
- * 判断一个值是不是String。
- *
- * @param {*} value 需要判断类型的值
- * @returns {boolean} 如果是String返回true，否则返回false
- */
-
-function _isString (value) {
-  var type = _typeof(value);
-
-  return type === 'string' || type === 'object' && value != null && !Array.isArray(value) && getType(value) === '[object String]';
-}
-
-var isString = _isString;
+var index = 0;
 
 var doit = function doit(el, binding) {
   // 随机生成唯一标志
-  var id = "kp-math-formula-id-" + (Math.random() * 100000000000).toFixed(0); // 获取需要绘制的式子的数据
+  var id = "kp-math-formula-id-" + index++; // 获取需要绘制的式子的数据
 
   var mathFormulaData = binding.value;
   if (!mathFormulaData) return; // 设置画布大小并插入页面
@@ -1253,6 +1224,38 @@ var doit = function doit(el, binding) {
               _iterator.f();
             }
 
+            break;
+          }
+
+        case "matrix":
+          {
+            // 先绘制内容
+            for (var i in data.contents) {
+              for (var j in data.contents[i]) {
+                var curData = data.contents[i][j];
+                drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+              }
+            } // 绘制两边
+
+
+            if (data._help.isHLS) {
+              painter.beginPath().lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"]).stroke();
+              painter.beginPath().lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + config.mathFormula["padding-size"]).lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + data.height - config.mathFormula["padding-size"]).stroke();
+            } else {
+              painter.beginPath().lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"] + 5).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"] - 5).lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]).stroke();
+              painter.beginPath().lineTo(x - config.mathFormula["padding-size"] - 10 + data.width, y + config.mathFormula["padding-size"]).lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + config.mathFormula["padding-size"] + 5).lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + data.height - config.mathFormula["padding-size"] - 5).lineTo(x - config.mathFormula["padding-size"] - 10 + data.width, y + data.height - config.mathFormula["padding-size"]).stroke();
+            }
+
+            break;
+          }
+
+        case "division":
+          {
+            // 先绘制内容，从上到下
+            drawFormula(x + (data.width - data.contents[0].width) * 0.5, y + config.mathFormula["padding-size"], data.contents[0]);
+            drawFormula(x + (data.width - data.contents[1].width) * 0.5, y + config.mathFormula["padding-size"] + data.contents[0].height + 2, data.contents[1]); // 再绘制中间的线条
+
+            painter.beginPath().lineTo(x + config.mathFormula["padding-size"], y + data.height * 0.5).lineTo(x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5).stroke();
             break;
           }
 
@@ -1572,12 +1575,55 @@ function calcSize (texts) {
   return xhtml.size(helpHidden);
 }
 
+var toString = Object.prototype.toString;
+/**
+ * 获取一个值的类型字符串[object type]
+ *
+ * @param {*} value 需要返回类型的值
+ * @returns {string} 返回类型字符串
+ */
+
+function getType (value) {
+  if (value == null) {
+    return value === undefined ? '[object Undefined]' : '[object Null]';
+  }
+
+  return toString.call(value);
+}
+
+/**
+ * 判断一个值是不是number。
+ *
+ * @param {*} value 需要判断类型的值
+ * @returns {boolean} 如果是number返回true，否则返回false
+ */
+
+function _isNumber (value) {
+  return typeof value === 'number' || value !== null && _typeof(value) === 'object' && getType(value) === '[object Number]';
+}
+
+/**
+ * 判断一个值是不是String。
+ *
+ * @param {*} value 需要判断类型的值
+ * @returns {boolean} 如果是String返回true，否则返回false
+ */
+
+function _isString (value) {
+  var type = _typeof(value);
+
+  return type === 'string' || type === 'object' && value != null && !Array.isArray(value) && getType(value) === '[object String]';
+}
+
+var isNumber = _isNumber;
+var isString = _isString;
+
 /**
  * 用于捕获用户意图的一系列方法
  */
 
 var formatBasic = function formatBasic(p1) {
-  if (isString(p1)) {
+  if (isString(p1) || isNumber(p1)) {
     var contentSize = calcSize(p1);
     return {
       width: contentSize.width + config.mathFormula["padding-size"] * 2,
@@ -1672,6 +1718,88 @@ var mathFormula = {
       height: height + config.mathFormula["padding-size"] * 2,
       contents: pxObjs,
       type: "join"
+    };
+  },
+  // 矩阵和行列式
+  matrix: function matrix(p1, p2) {
+    var pxObjs = []; // 分别用于记录当前行最高多少和当前列最宽多少
+
+    var rowMax = [],
+        colMax = [];
+
+    for (var i in p1) {
+      rowMax[i] = 0;
+    }
+
+    for (var j in p1[0]) {
+      colMax[j] = 0;
+    }
+
+    for (var _i2 in p1) {
+      var rowPxObjs = [],
+          row = p1[_i2];
+
+      for (var _j in row) {
+        var col = row[_j];
+        var colPxObj = formatBasic(col);
+        rowPxObjs.push(colPxObj); // 校对行和列的最值
+
+        if (rowMax[_i2] < colPxObj.height) rowMax[_i2] = colPxObj.height;
+        if (colMax[_j] < colPxObj.width) colMax[_j] = colPxObj.width;
+      }
+
+      pxObjs.push(rowPxObjs);
+    } // 计算得出宽和高
+
+
+    var width = 0,
+        height = 0;
+
+    for (var _i3 = 0, _rowMax = rowMax; _i3 < _rowMax.length; _i3++) {
+      var value = _rowMax[_i3];
+      height += value;
+    }
+
+    for (var _i4 = 0, _colMax = colMax; _i4 < _colMax.length; _i4++) {
+      var _value = _colMax[_i4];
+      width += _value;
+    } // 计算中心位置
+
+
+    var rowCenter = [],
+        colCenter = [];
+    rowCenter[0] = config.mathFormula["padding-size"] + rowMax[0] * 0.5;
+    colCenter[0] = config.mathFormula["padding-size"] + colMax[0] * 0.5 + 10;
+
+    for (var _i5 = 1; _i5 < rowMax.length; _i5++) {
+      rowCenter[_i5] = rowCenter[_i5 - 1] + (rowMax[_i5 - 1] + rowMax[_i5]) * 0.5;
+    }
+
+    for (var _j2 = 1; _j2 < colMax.length; _j2++) {
+      colCenter[_j2] = colCenter[_j2 - 1] + (colMax[_j2 - 1] + colMax[_j2]) * 0.5;
+    }
+
+    return {
+      width: width + config.mathFormula["padding-size"] * 2 + 20,
+      height: height + config.mathFormula["padding-size"] * 2,
+      contents: pxObjs,
+      type: "matrix",
+      _help: {
+        isHLS: p2,
+        rowCenter: rowCenter,
+        colCenter: colCenter
+      }
+    };
+  },
+  // 除
+  division: function division(p1, p2) {
+    var p1Obj = formatBasic(p1);
+    var p2Obj = formatBasic(p2);
+    return {
+      width: Math.max(p1Obj.width, p2Obj.width) + config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height + p2Obj.height + 2 + config.mathFormula["padding-size"] * 2,
+      contents: [p1Obj, p2Obj],
+      type: "division"
     };
   }
 };

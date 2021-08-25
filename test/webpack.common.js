@@ -1,5 +1,5 @@
 const KnowpediaLoaderPlugin = require('knowpedia/loader-plug/index.js');
-const path = require('path');
+// const path = require('path');
 
 module.exports = {
     entry: ['./src/entry.js'],
@@ -7,11 +7,11 @@ module.exports = {
         path: __dirname,
         filename: 'build/main.js'
     },
-    resolve: {
-        alias: {
-            'knowpedia': path.resolve('../dist/knowpedia.js')
-        }
-    },
+    // resolve: {
+    //     alias: {
+    //         'knowpedia': path.resolve('../dist/knowpedia.js')
+    //     }
+    // },
     module: {
         rules: [{
             test: /\.js$/,
@@ -27,7 +27,6 @@ module.exports = {
                 loader: "url-loader",
                 options: {
                     name: "build/[path][name].[ext]",
-                    context: "src/asset",
                     limit: 5000
                 }
             }]

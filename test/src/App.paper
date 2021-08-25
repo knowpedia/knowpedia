@@ -10,6 +10,9 @@
         <span kp-math-formula="mathFormulas.gen"></span>
         <span kp-math-formula="mathFormulas.limt"></span>
         <span kp-math-formula="mathFormulas.sum"></span>
+        <span kp-math-formula="mathFormulas['matrix-hls']"></span>
+        <span kp-math-formula="mathFormulas.matrix"></span>
+        <span kp-math-formula="mathFormulas.division"></span>
 
         <i>
             简单组合：
@@ -17,7 +20,7 @@
 
         <span kp-math-formula="mathFormulas.gen_limt"></span>
         <span kp-math-formula="mathFormulas.gen_sum"></span>
-
+        <span kp-math-formula="mathFormulas.gen_matrix"></span>
         <i>
             拼接组合：
         </i>
@@ -41,10 +44,25 @@
                 gen: this.$mathFormula.gen("(x+1)*y"),
                 limt: this.$mathFormula.limt("x->10", "(10x+1)*z"),// x趋向10的时候x+1值
                 sum: this.$mathFormula.sum("i=0", '90', '(x+1)'),
+                "matrix-hls": this.$mathFormula.matrix([
+                    [1, 0, 0, 0],
+                    [0, 1, 0, 0],
+                    [0, 0, 1, 123],
+                    [980, 0, 0, 1]], true),// 行列式
+                matrix: this.$mathFormula.matrix([
+                    ["A", "", ""],
+                    ["", "...", ""],
+                    ["", "", "B"]
+                ], false),// 矩阵
+                division: this.$mathFormula.division(1, 100),
 
                 // 简单组合
                 gen_limt: this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")),
                 gen_sum: this.$mathFormula.sum("n=0", "100", this.$mathFormula.gen(this.$mathFormula.sum("i=0", '90', '(x+1)'))),
+                gen_matrix: this.$mathFormula.matrix([
+                    [1, this.$mathFormula.gen("(x+1)*y")],
+                    [0, 1]
+                ]),
 
                 // 拼接组合
                 array: this.$mathFormula.join('x', "+", this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")))

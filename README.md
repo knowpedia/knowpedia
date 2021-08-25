@@ -28,6 +28,8 @@
 
 ### 数学公式
 
+<img src='./images/mathFormula.png'>
+
 首先，你需要在数据中定义公式，语法如下：
 
 ```js
@@ -70,14 +72,28 @@ this.$mathFormula.gen(p1);
 
 ```js
 // p1表示趋向，p2是计算结果的表达式
-this.$mathFormula.limt(p1,p2);
+this.$mathFormula.limt(p1, p2);
 ```
 
 - 求和
 
 ```js
 // p1表示开始，p2是结束的值，p3是需要求和的表达式
-this.$mathFormula.sum(p1,p2,p3);
+this.$mathFormula.sum(p1, p2, p3);
+```
+
+- 矩阵和行列式
+
+```js
+// 第一个参数是一个二维数组
+// 第二个参考默认false，表示矩阵，可选，如果是true，表示行列式
+this.$mathFormula.matrix(p1, p2);
+```
+
+- 除
+
+```js
+this.$mathFormula.division(p1, p2);
 ```
 
 开源协议

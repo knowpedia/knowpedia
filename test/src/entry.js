@@ -1,4 +1,5 @@
-import Knowpedia from 'knowpedia';
+// import Knowpedia from 'knowpedia';
+import Knowpedia from '../../src/index.js';
 
 // 兼容文件
 import '@hai2007/polyfill/Promise.js';

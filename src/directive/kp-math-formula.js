@@ -2,10 +2,12 @@
 import CrossEndCanvas from 'cross-end-canvas';
 import config from '../config';
 
+let index = 0;
+
 let doit = (el, binding) => {
 
     // 随机生成唯一标志
-    let id = "kp-math-formula-id-" + ((Math.random() * 100000000000).toFixed(0));
+    let id = "kp-math-formula-id-" + (index++);
 
     // 获取需要绘制的式子的数据
     let mathFormulaData = binding.value;
@@ -86,6 +88,63 @@ let doit = (el, binding) => {
                         drawFormula(x + config.mathFormula["padding-size"], y - item.height * 0.5 + data.height * 0.5, item);
                         x += item.width;
                     }
+
+                    break;
+                }
+                case "matrix": {
+
+                    // 先绘制内容
+                    for (let i in data.contents) {
+                        for (let j in data.contents[i]) {
+                            let curData = data.contents[i][j];
+                            drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+                        }
+                    }
+
+                    // 绘制两边
+                    if (data._help.isHLS) {
+
+                        painter.beginPath()
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"])
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+                        painter.beginPath()
+                            .lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + config.mathFormula["padding-size"])
+                            .lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+                    } else {
+
+                        painter.beginPath()
+                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"])
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"] + 5)
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"] - 5)
+                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+                        painter.beginPath()
+                            .lineTo(x - config.mathFormula["padding-size"] - 10 + data.width, y + config.mathFormula["padding-size"])
+                            .lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + config.mathFormula["padding-size"] + 5)
+                            .lineTo(x - config.mathFormula["padding-size"] - 5 + data.width, y + data.height - config.mathFormula["padding-size"] - 5)
+                            .lineTo(x - config.mathFormula["padding-size"] - 10 + data.width, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+                    }
+
+                    break;
+                }
+                case "division": {
+
+                    // 先绘制内容，从上到下
+                    drawFormula(x + (data.width - data.contents[0].width) * 0.5, y + config.mathFormula["padding-size"], data.contents[0]);
+                    drawFormula(x + (data.width - data.contents[1].width) * 0.5, y + config.mathFormula["padding-size"] + data.contents[0].height + 2, data.contents[1]);
+
+                    // 再绘制中间的线条
+                    painter.beginPath()
+                        .lineTo(x + config.mathFormula["padding-size"], y + data.height * 0.5)
+                        .lineTo(x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5)
+                        .stroke();
 
                     break;
                 }
