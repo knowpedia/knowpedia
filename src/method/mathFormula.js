@@ -185,6 +185,25 @@ let mathFormula = {
             type: "division"
         };
 
+    },
+
+    // 括号
+    // p2表示括号的类型，可选的有：
+    // small、middle、big，分别表示，小括号、中括号、大括号
+    bracket(p1, p2) {
+
+        let p1Obj = formatBasic(p1);
+
+        return {
+            width: p1Obj.width + 20 + config.mathFormula["padding-size"] * 2,
+            height: p1Obj.height + config.mathFormula["padding-size"] * 2,
+            contents: [p1Obj],
+            type: "bracket",
+            _help: {
+                type: p2
+            }
+        };
+
     }
 
 };

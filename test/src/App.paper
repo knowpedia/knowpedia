@@ -26,6 +26,9 @@
         </i>
 
         <span kp-math-formula="mathFormulas.array"></span>
+        <span kp-math-formula="mathFormulas['bracket-small']"></span>
+        <span kp-math-formula="mathFormulas['bracket-middle']"></span>
+        <span kp-math-formula="mathFormulas['bracket-big']"></span>
 
     </div>
 </template>
@@ -65,7 +68,20 @@
                 ]),
 
                 // 拼接组合
-                array: this.$mathFormula.join('x', "+", this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")))
+                array: this.$mathFormula.join('x', "+", this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y"))),
+                "bracket-small": this.$mathFormula.bracket(this.$mathFormula.join(
+                    this.$mathFormula.bracket("x+1", 'small'),
+                    "+",
+                    this.$mathFormula.matrix([
+                        [1, this.$mathFormula.gen("(x+1)*y")],
+                        [0, 1]
+                    ])
+                ), 'small'),
+                "bracket-middle": this.$mathFormula.bracket(2, 'middle'),
+                "bracket-big": this.$mathFormula.bracket(this.$mathFormula.join(this.$mathFormula.matrix([
+                    [1, this.$mathFormula.gen("(x+1)*y")],
+                    [0, 1]
+                ]), "+10"), 'big'),
             };
         }
     };

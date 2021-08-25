@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.2.2
+ * version 0.2.3
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Wed Aug 25 2021 11:32:00 GMT+0800 (中国标准时间)
+ * Date:Wed Aug 25 2021 16:39:10 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1142,7 +1142,7 @@ var crossEndCanvas_min = createCommonjsModule(function (module) {
 var config = {
   mathFormula: {
     "font-size": 12,
-    "padding-size": 2
+    "padding-size": 3
   }
 };
 
@@ -1256,6 +1256,28 @@ var doit = function doit(el, binding) {
             drawFormula(x + (data.width - data.contents[1].width) * 0.5, y + config.mathFormula["padding-size"] + data.contents[0].height + 2, data.contents[1]); // 再绘制中间的线条
 
             painter.beginPath().lineTo(x + config.mathFormula["padding-size"], y + data.height * 0.5).lineTo(x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5).stroke();
+            break;
+          }
+
+        case "bracket":
+          {
+            // 先绘制中间的内容
+            drawFormula(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"], data.contents[0]); // 再绘制括号
+
+            if (data._help.type == "small") {
+              painter.beginPath().moveTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"]).quadraticCurveTo(x + config.mathFormula["padding-size"], y + data.height * 0.5, x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]).stroke();
+              painter.beginPath().moveTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"]).quadraticCurveTo(x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5, x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]).stroke();
+            } else if (data._help.type == "middle") {
+              painter.beginPath().lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]).stroke();
+              painter.beginPath().lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]).stroke();
+            } else if (data._help.type == "big") {
+              painter.beginPath().lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"] + 3).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 - 3).lineTo(x + config.mathFormula["padding-size"] + 2, y + data.height * 0.5).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 + 3).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"] - 3).lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]).stroke();
+              painter.beginPath().lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"] + 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 - 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 2, y + data.height * 0.5).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 + 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"] - 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]).stroke();
+            } else {
+              throw new Error('括号的类型是必须的');
+            }
+
+            console.log(data);
             break;
           }
 
@@ -1800,6 +1822,21 @@ var mathFormula = {
       height: p1Obj.height + p2Obj.height + 2 + config.mathFormula["padding-size"] * 2,
       contents: [p1Obj, p2Obj],
       type: "division"
+    };
+  },
+  // 括号
+  // p2表示括号的类型，可选的有：
+  // small、middle、big，分别表示，小括号、中括号、大括号
+  bracket: function bracket(p1, p2) {
+    var p1Obj = formatBasic(p1);
+    return {
+      width: p1Obj.width + 20 + config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height + config.mathFormula["padding-size"] * 2,
+      contents: [p1Obj],
+      type: "bracket",
+      _help: {
+        type: p2
+      }
     };
   }
 };

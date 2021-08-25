@@ -148,6 +148,79 @@ let doit = (el, binding) => {
 
                     break;
                 }
+                case "bracket": {
+
+                    // 先绘制中间的内容
+                    drawFormula(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"], data.contents[0]);
+
+                    // 再绘制括号
+                    if (data._help.type == "small") {
+
+                        painter.beginPath()
+                            .moveTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"])
+                            .quadraticCurveTo(
+                                x + config.mathFormula["padding-size"], y + data.height * 0.5,
+                                x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]
+                            )
+                            .stroke();
+
+                        painter.beginPath()
+                            .moveTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"])
+                            .quadraticCurveTo(
+                                x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5,
+                                x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]
+                            )
+                            .stroke();
+
+                    } else if (data._help.type == "middle") {
+
+                        painter.beginPath()
+                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"])
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"])
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"])
+                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+                        painter.beginPath()
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"])
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"])
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"])
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+
+                    } else if (data._help.type == "big") {
+
+                        painter.beginPath()
+                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"])
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"] + 3)
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 - 3)
+                            .lineTo(x + config.mathFormula["padding-size"] + 2, y + data.height * 0.5)
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 + 3)
+                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"] - 3)
+                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+                        painter.beginPath()
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"])
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"] + 3)
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 - 3)
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 2, y + data.height * 0.5)
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 + 3)
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"] - 3)
+                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"])
+                            .stroke();
+
+                    } else {
+                        throw new Error('括号的类型是必须的');
+                    }
+
+                    console.log(data);
+
+
+
+                    break;
+                }
                 default: {
                     console.error('未匹配的数据格式：');
                     console.error(x, y, data);
