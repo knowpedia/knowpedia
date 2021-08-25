@@ -215,10 +215,6 @@ let doit = (el, binding) => {
                         throw new Error('括号的类型是必须的');
                     }
 
-                    console.log(data);
-
-
-
                     break;
                 }
                 default: {

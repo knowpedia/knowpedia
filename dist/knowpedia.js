@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.2.3
+ * version 0.2.4
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Wed Aug 25 2021 16:39:10 GMT+0800 (中国标准时间)
+ * Date:Wed Aug 25 2021 16:51:19 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1277,7 +1277,6 @@ var doit = function doit(el, binding) {
               throw new Error('括号的类型是必须的');
             }
 
-            console.log(data);
             break;
           }
 
