@@ -96,6 +96,12 @@ this.$mathFormula.matrix(p1, p2);
 this.$mathFormula.division(p1, p2);
 ```
 
+## 特殊符号
+
+```js
+["α", "β", "γ", "δ", "ε", "δ", "ε", "ζ", "η", "θ", "ι", "λ", "μ", "ν", "π", "ξ", "ζ", "η", "υ", "θ", "χ", "ψ", "ω", "∞", "∉", "∈", "≥", "≤", "≫", "≪"]
+```
+
 开源协议
 ---------------------------------------
 [MIT](https://github.com/knowpedia/knowpedia/blob/master/LICENSE)
