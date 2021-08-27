@@ -34,6 +34,6 @@
   "dependencies": {
     "@hai2007/tool": "^0.9.0",
     "cross-end-canvas": "^0.1.1",
-    "quick-paper": "^0.6.0"
+    "quick-paper": "^1.0.0"
   }
 }

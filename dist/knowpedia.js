@@ -10,7 +10,7 @@
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Wed Aug 25 2021 17:46:47 GMT+0800 (中国标准时间)
+ * Date:Fri Aug 27 2021 10:58:00 GMT+0800 (GMT+08:00)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -106,7 +106,7 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var quickPaper_core_min = createCommonjsModule(function (module) {
+var quickPaper_min = createCommonjsModule(function (module) {
 
   function ownKeys(e, t) {
     var n = Object.keys(e);
@@ -151,7 +151,7 @@ var quickPaper_core_min = createCommonjsModule(function (module) {
     })(e);
   }
   /*!
-  * quick-paper.core v0.6.0
+  * quick-paper v1.0.0
   * (c) 2019-2021 你好2007 git+https://github.com/hai2007/quick-paper.git
   * License: MIT
   */
@@ -1884,7 +1884,7 @@ var mathFormula = {
 };
 
 // 引入QuickPaper核心代码，基于此进行二次开发
-quickPaper_core_min.directive("kpMathFormula", kpMathFormula); // 意图捕获方法集
-quickPaper_core_min.prototype.$mathFormula = mathFormula;
+quickPaper_min.directive("kpMathFormula", kpMathFormula); // 意图捕获方法集
+quickPaper_min.prototype.$mathFormula = mathFormula;
 
-export default quickPaper_core_min;
+export default quickPaper_min;

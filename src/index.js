@@ -1,5 +1,5 @@
 // 引入QuickPaper核心代码，基于此进行二次开发
-import Knowpedia from 'quick-paper/dist/quick-paper.core.min.js';
+import Knowpedia from 'quick-paper';
 
 /**
  * 数学式子
