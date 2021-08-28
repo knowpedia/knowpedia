@@ -2,6 +2,8 @@
 import CrossEndCanvas from 'cross-end-canvas';
 import config from '../config';
 
+import { drawBracket } from './draw';
+
 let index = 0;
 
 let doit = (el, binding) => {
@@ -97,7 +99,16 @@ let doit = (el, binding) => {
                     for (let i in data.contents) {
                         for (let j in data.contents[i]) {
                             let curData = data.contents[i][j];
-                            drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+
+                            // 对于"|"特殊处理
+                            if (curData.contents[0] == '|') {
+                                painter.beginPath()
+                                    .lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] - curData.height * 0.5)
+                                    .lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] + curData.height * 0.5)
+                                    .stroke();
+                            } else {
+                                drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+                            }
                         }
                     }
 
@@ -154,67 +165,8 @@ let doit = (el, binding) => {
                     drawFormula(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"], data.contents[0]);
 
                     // 再绘制括号
-                    if (data._help.type == "small") {
-
-                        painter.beginPath()
-                            .moveTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"])
-                            .quadraticCurveTo(
-                                x + config.mathFormula["padding-size"], y + data.height * 0.5,
-                                x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]
-                            )
-                            .stroke();
-
-                        painter.beginPath()
-                            .moveTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"])
-                            .quadraticCurveTo(
-                                x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5,
-                                x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]
-                            )
-                            .stroke();
-
-                    } else if (data._help.type == "middle") {
-
-                        painter.beginPath()
-                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"])
-                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"])
-                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"])
-                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"])
-                            .stroke();
-
-                        painter.beginPath()
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"])
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"])
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"])
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"])
-                            .stroke();
-
-
-                    } else if (data._help.type == "big") {
-
-                        painter.beginPath()
-                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"])
-                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"] + 3)
-                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 - 3)
-                            .lineTo(x + config.mathFormula["padding-size"] + 2, y + data.height * 0.5)
-                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 + 3)
-                            .lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"] - 3)
-                            .lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"])
-                            .stroke();
-
-                        painter.beginPath()
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"])
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"] + 3)
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 - 3)
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 2, y + data.height * 0.5)
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 + 3)
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"] - 3)
-                            .lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"])
-                            .stroke();
-
-                    } else {
-                        throw new Error('括号的类型是必须的');
-                    }
-
+                    drawBracket(painter, data._help.type, 'left', x + config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.height - 2 * config.mathFormula["padding-size"]);
+                    drawBracket(painter, data._help.type, 'right', x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"], data.height - 2 * config.mathFormula["padding-size"]);
                     break;
                 }
                 case "rightTop": {
@@ -228,6 +180,16 @@ let doit = (el, binding) => {
 
                     drawFormula(x + 0.5 * config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.contents[0]);
                     drawFormula(x - 1.5 * config.mathFormula["padding-size"] + data._help.p1Width, y + data.height - 0.5 * config.mathFormula["padding-size"] - data._help.p2Height, data.contents[1]);
+
+                    break;
+                }
+                case "equationSet": {
+
+                    drawBracket(painter, "big", 'left', x + config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.height - 2 * config.mathFormula["padding-size"]);
+
+                    for (let i in data.contents) {
+                        drawFormula(x + config.mathFormula["padding-size"] + 10, y + data._help.pxTops[i], data.contents[i]);
+                    }
 
                     break;
                 }

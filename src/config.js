@@ -1,8 +1,8 @@
 export default {
 
-    mathFormula:{
-        "font-size":12,
-        "padding-size":3
+    mathFormula: {
+        "font-size": 12,
+        "padding-size": 3
     }
 
 };

@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.2.5
+ * version 0.3.0
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Fri Aug 27 2021 10:58:00 GMT+0800 (GMT+08:00)
+ * Date:Sat Aug 28 2021 15:29:37 GMT+0800 (GMT+08:00)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1146,6 +1146,29 @@ var config = {
   }
 };
 
+// 绘制括号
+var drawBracket = function drawBracket(painter, type, position, x, y, size) {
+  if (type == 'small') {
+    if (position == 'left') {
+      painter.beginPath().moveTo(x + 10, y).quadraticCurveTo(x, y + size * 0.5, x + 10, y + size).stroke();
+    } else if (position = 'right') {
+      painter.beginPath().moveTo(x, y).quadraticCurveTo(x + 10, y + size * 0.5, x, y + size).stroke();
+    }
+  } else if (type == 'middle') {
+    if (position == 'left') {
+      painter.beginPath().lineTo(x + 10, y).lineTo(x + 5, y).lineTo(x + 5, y + size).lineTo(x + 10, y + size).stroke();
+    } else if (position = 'right') {
+      painter.beginPath().lineTo(x, y).lineTo(x + 5, y).lineTo(x + 5, y + size).lineTo(x, y + size).stroke();
+    }
+  } else if (type == 'big') {
+    if (position == 'left') {
+      painter.beginPath().lineTo(x + 10, y).lineTo(x + 5, y + 3).lineTo(x + 5, y + size * 0.5 - 3).lineTo(x + 2, y + size * 0.5).lineTo(x + 5, y + size * 0.5 + 3).lineTo(x + 5, y + size - 3).lineTo(x + 10, y + size).stroke();
+    } else if (position = 'right') {
+      painter.beginPath().lineTo(x, y).lineTo(x + 5, y + 3).lineTo(x + 5, y + size * 0.5 - 3).lineTo(x + 7, y + size * 0.5).lineTo(x + 5, y + size * 0.5 + 3).lineTo(x + 5, y + size - 3).lineTo(x, y + size).stroke();
+    }
+  }
+};
+
 var index = 0;
 
 var doit = function doit(el, binding) {
@@ -1232,8 +1255,13 @@ var doit = function doit(el, binding) {
             // 先绘制内容
             for (var i in data.contents) {
               for (var j in data.contents[i]) {
-                var curData = data.contents[i][j];
-                drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+                var curData = data.contents[i][j]; // 对于"|"特殊处理
+
+                if (curData.contents[0] == '|') {
+                  painter.beginPath().lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] - curData.height * 0.5).lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] + curData.height * 0.5).stroke();
+                } else {
+                  drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+                }
               }
             } // 绘制两边
 
@@ -1264,19 +1292,8 @@ var doit = function doit(el, binding) {
             // 先绘制中间的内容
             drawFormula(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"], data.contents[0]); // 再绘制括号
 
-            if (data._help.type == "small") {
-              painter.beginPath().moveTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"]).quadraticCurveTo(x + config.mathFormula["padding-size"], y + data.height * 0.5, x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]).stroke();
-              painter.beginPath().moveTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"]).quadraticCurveTo(x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5, x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]).stroke();
-            } else if (data._help.type == "middle") {
-              painter.beginPath().lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]).stroke();
-              painter.beginPath().lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]).stroke();
-            } else if (data._help.type == "big") {
-              painter.beginPath().lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"]).lineTo(x + config.mathFormula["padding-size"] + 5, y + config.mathFormula["padding-size"] + 3).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 - 3).lineTo(x + config.mathFormula["padding-size"] + 2, y + data.height * 0.5).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height * 0.5 + 3).lineTo(x + config.mathFormula["padding-size"] + 5, y + data.height - config.mathFormula["padding-size"] - 3).lineTo(x + config.mathFormula["padding-size"] + 10, y + data.height - config.mathFormula["padding-size"]).stroke();
-              painter.beginPath().lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"]).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + config.mathFormula["padding-size"] + 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 - 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 2, y + data.height * 0.5).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height * 0.5 + 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 5, y + data.height - config.mathFormula["padding-size"] - 3).lineTo(x + data.width - config.mathFormula["padding-size"] - 10, y + data.height - config.mathFormula["padding-size"]).stroke();
-            } else {
-              throw new Error('括号的类型是必须的');
-            }
-
+            drawBracket(painter, data._help.type, 'left', x + config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.height - 2 * config.mathFormula["padding-size"]);
+            drawBracket(painter, data._help.type, 'right', x + data.width - config.mathFormula["padding-size"] - 10, y + config.mathFormula["padding-size"], data.height - 2 * config.mathFormula["padding-size"]);
             break;
           }
 
@@ -1291,6 +1308,17 @@ var doit = function doit(el, binding) {
           {
             drawFormula(x + 0.5 * config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.contents[0]);
             drawFormula(x - 1.5 * config.mathFormula["padding-size"] + data._help.p1Width, y + data.height - 0.5 * config.mathFormula["padding-size"] - data._help.p2Height, data.contents[1]);
+            break;
+          }
+
+        case "equationSet":
+          {
+            drawBracket(painter, "big", 'left', x + config.mathFormula["padding-size"], y + config.mathFormula["padding-size"], data.height - 2 * config.mathFormula["padding-size"]);
+
+            for (var _i in data.contents) {
+              drawFormula(x + config.mathFormula["padding-size"] + 10, y + data._help.pxTops[_i], data.contents[_i]);
+            }
+
             break;
           }
 
@@ -1878,6 +1906,38 @@ var mathFormula = {
       _help: {
         p1Width: p1Obj.width,
         p2Height: p2Obj.height
+      }
+    };
+  },
+  // 方程组
+  equationSet: function equationSet() {
+    var pxObjs = [],
+        width = 0,
+        height = 0,
+        pxTop = config.mathFormula["padding-size"],
+        pxTops = [];
+
+    for (var _len2 = arguments.length, px = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      px[_key2] = arguments[_key2];
+    }
+
+    for (var _i6 = 0, _px2 = px; _i6 < _px2.length; _i6++) {
+      var p = _px2[_i6];
+      var pxObj = formatBasic(p);
+      pxObjs.push(pxObj);
+      height += pxObj.height;
+      width = pxObj.width > width ? pxObj.width : width;
+      pxTops.push(pxTop);
+      pxTop += pxObj.height;
+    }
+
+    return {
+      width: width + 10 + config.mathFormula["padding-size"] * 2,
+      height: height + config.mathFormula["padding-size"] * 2,
+      contents: pxObjs,
+      type: "equationSet",
+      _help: {
+        pxTops: pxTops
       }
     };
   }

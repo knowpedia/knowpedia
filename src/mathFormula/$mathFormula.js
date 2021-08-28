@@ -239,6 +239,30 @@ let mathFormula = {
                 p2Height: p2Obj.height
             }
         };
+    },
+
+    // 方程组
+    equationSet(...px) {
+        let pxObjs = [], width = 0, height = 0, pxTop = config.mathFormula["padding-size"], pxTops = [];
+        for (let p of px) {
+            let pxObj = formatBasic(p);
+            pxObjs.push(pxObj);
+
+            height += pxObj.height;
+            width = pxObj.width > width ? pxObj.width : width;
+
+            pxTops.push(pxTop);
+            pxTop += pxObj.height;
+        }
+        return {
+            width: width + 10 + config.mathFormula["padding-size"] * 2,
+            height: height + config.mathFormula["padding-size"] * 2,
+            contents: pxObjs,
+            type: "equationSet",
+            _help: {
+                pxTops
+            }
+        };
     }
 
 };
