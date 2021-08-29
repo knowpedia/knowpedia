@@ -114,15 +114,6 @@ this.$mathFormula.rightBottom(p1, p2);// p2在右下角
 this.$mathFormula.equationSet(...p);
 ```
 
-## 特殊符号
-
-|||||||||||
-|-|-|-|-|-|-|-|-|-|-|
-|α|β|γ|δ|ε|≫|≪|ζ|η|θ|
-|ι|λ|μ|ν|π|ξ|∞|υ|≥|≤|
-|χ|ψ|ω|∉|∈|→|||||
-|||||||||||
-
 开源协议
 ---------------------------------------
 [MIT](https://github.com/knowpedia/knowpedia/blob/master/LICENSE)
