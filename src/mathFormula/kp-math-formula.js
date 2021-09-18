@@ -193,6 +193,63 @@ let doit = (el, binding) => {
 
                     break;
                 }
+                case "upLine": {
+
+                    drawFormula(x, y + config.mathFormula["padding-size"], data.contents[0]);
+                    painter
+                        .beginPath()
+                        .lineTo(x, y + config.mathFormula["padding-size"])
+                        .lineTo(x + data.width, y + config.mathFormula["padding-size"])
+                        .stroke();
+
+                    break;
+                }
+                case "downLine": {
+
+                    drawFormula(x, y, data.contents[0]);
+                    painter
+                        .beginPath()
+                        .lineTo(x, y + data.height - config.mathFormula["padding-size"])
+                        .lineTo(x + data.width, y + data.height - config.mathFormula["padding-size"])
+                        .stroke();
+
+                    break;
+                }
+                case "absoluteValue": {
+
+                    drawFormula(x + config.mathFormula["padding-size"], y, data.contents[0]);
+
+                    painter
+                        .beginPath()
+                        .lineTo(x + config.mathFormula["padding-size"], y)
+                        .lineTo(x + config.mathFormula["padding-size"], y + data.height)
+                        .stroke();
+
+                    painter
+                        .beginPath()
+                        .lineTo(x + data.width - config.mathFormula["padding-size"], y)
+                        .lineTo(x + data.width - config.mathFormula["padding-size"], y + data.height)
+                        .stroke();
+
+                    break;
+                }
+                case "integral": {
+
+                    drawFormula(x + config.mathFormula["padding-size"] + 15, y + config.mathFormula["padding-size"], data.contents[3]);
+                    drawFormula(x + config.mathFormula["padding-size"] + 10, y + data.height - data.contents[2].height - config.mathFormula["padding-size"], data.contents[2]);
+                    drawFormula(x + config.mathFormula["padding-size"] + 15, y + config.mathFormula["padding-size"] + data.contents[3].height, data.contents[0]);
+                    drawFormula(x + config.mathFormula["padding-size"] + 15 + data.contents[0].width, y + config.mathFormula["padding-size"] + data.contents[3].height + 0.5 * (data.contents[0].height - data.contents[1].height), data.contents[1]);
+
+                    // 然后绘制积分符号
+                    painter.beginPath()
+                        .moveTo(x + config.mathFormula["padding-size"], y + data.height - config.mathFormula["padding-size"] - 2.5)
+                        .arc(x + config.mathFormula["padding-size"] + 2.5, y + data.height - config.mathFormula["padding-size"] - 2.5, 2.5, Math.PI, -Math.PI)
+                        .lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"] + 2.5)
+                        .arc(x + config.mathFormula["padding-size"] + 12.5, y + config.mathFormula["padding-size"] + 2.5, 2.5, Math.PI, Math.PI)
+                        .stroke();
+
+                    break;
+                }
                 default: {
                     console.error('未匹配的数据格式：');
                     console.error(x, y, data);

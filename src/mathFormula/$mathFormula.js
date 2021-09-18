@@ -263,6 +263,57 @@ let mathFormula = {
                 pxTops
             }
         };
+    },
+
+    // 上线
+    upLine(p1) {
+        let p1Obj = formatBasic(p1);
+
+        return {
+            width: p1Obj.width,
+            height: p1Obj.height + config.mathFormula["padding-size"],
+            contents: [p1Obj],
+            type: "upLine"
+        };
+    },
+
+    // 下线
+    downLine(p1) {
+        let p1Obj = formatBasic(p1);
+
+        return {
+            width: p1Obj.width,
+            height: p1Obj.height + config.mathFormula["padding-size"],
+            contents: [p1Obj],
+            type: "downLine"
+        };
+    },
+
+    // 绝对值
+    absoluteValue(p1) {
+        let p1Obj = formatBasic(p1);
+
+        return {
+            width: p1Obj.width + config.mathFormula["padding-size"] * 2,
+            height: p1Obj.height,
+            contents: [p1Obj],
+            type: "absoluteValue"
+        };
+    },
+
+    // 定积分和不定积分
+    integral(p1, p2, p3 = '', p4 = '') {
+        let p1Obj = formatBasic(p1);
+        let p2Obj = formatBasic(p2);
+        let p3Obj = formatBasic(p3);
+        let p4Obj = formatBasic(p4);
+
+        return {
+            width: Math.max(p1Obj.width + p2Obj.width, p3Obj.width - 5, p4Obj.width) + 15 + config.mathFormula["padding-size"] * 2,
+            height: p1Obj.height + p3Obj.height + p4Obj.height + config.mathFormula["padding-size"] * 2,
+            contents: [p1Obj, p2Obj, p3Obj, p4Obj],
+            type: "integral"
+        };
     }
 
 };

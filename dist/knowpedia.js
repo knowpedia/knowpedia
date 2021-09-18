@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.3.0
+ * version 0.4.0
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sat Aug 28 2021 15:29:37 GMT+0800 (GMT+08:00)
+ * Date:Sat Sep 18 2021 16:02:39 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1322,6 +1322,39 @@ var doit = function doit(el, binding) {
             break;
           }
 
+        case "upLine":
+          {
+            drawFormula(x, y + config.mathFormula["padding-size"], data.contents[0]);
+            painter.beginPath().lineTo(x, y + config.mathFormula["padding-size"]).lineTo(x + data.width, y + config.mathFormula["padding-size"]).stroke();
+            break;
+          }
+
+        case "downLine":
+          {
+            drawFormula(x, y, data.contents[0]);
+            painter.beginPath().lineTo(x, y + data.height - config.mathFormula["padding-size"]).lineTo(x + data.width, y + data.height - config.mathFormula["padding-size"]).stroke();
+            break;
+          }
+
+        case "absoluteValue":
+          {
+            drawFormula(x + config.mathFormula["padding-size"], y, data.contents[0]);
+            painter.beginPath().lineTo(x + config.mathFormula["padding-size"], y).lineTo(x + config.mathFormula["padding-size"], y + data.height).stroke();
+            painter.beginPath().lineTo(x + data.width - config.mathFormula["padding-size"], y).lineTo(x + data.width - config.mathFormula["padding-size"], y + data.height).stroke();
+            break;
+          }
+
+        case "integral":
+          {
+            drawFormula(x + config.mathFormula["padding-size"] + 15, y + config.mathFormula["padding-size"], data.contents[3]);
+            drawFormula(x + config.mathFormula["padding-size"] + 10, y + data.height - data.contents[2].height - config.mathFormula["padding-size"], data.contents[2]);
+            drawFormula(x + config.mathFormula["padding-size"] + 15, y + config.mathFormula["padding-size"] + data.contents[3].height, data.contents[0]);
+            drawFormula(x + config.mathFormula["padding-size"] + 15 + data.contents[0].width, y + config.mathFormula["padding-size"] + data.contents[3].height + 0.5 * (data.contents[0].height - data.contents[1].height), data.contents[1]); // 然后绘制积分符号
+
+            painter.beginPath().moveTo(x + config.mathFormula["padding-size"], y + data.height - config.mathFormula["padding-size"] - 2.5).arc(x + config.mathFormula["padding-size"] + 2.5, y + data.height - config.mathFormula["padding-size"] - 2.5, 2.5, Math.PI, -Math.PI).lineTo(x + config.mathFormula["padding-size"] + 10, y + config.mathFormula["padding-size"] + 2.5).arc(x + config.mathFormula["padding-size"] + 12.5, y + config.mathFormula["padding-size"] + 2.5, 2.5, Math.PI, Math.PI).stroke();
+            break;
+          }
+
         default:
           {
             console.error('未匹配的数据格式：');
@@ -1940,10 +1973,55 @@ var mathFormula = {
         pxTops: pxTops
       }
     };
+  },
+  // 上线
+  upLine: function upLine(p1) {
+    var p1Obj = formatBasic(p1);
+    return {
+      width: p1Obj.width,
+      height: p1Obj.height + config.mathFormula["padding-size"],
+      contents: [p1Obj],
+      type: "upLine"
+    };
+  },
+  // 下线
+  downLine: function downLine(p1) {
+    var p1Obj = formatBasic(p1);
+    return {
+      width: p1Obj.width,
+      height: p1Obj.height + config.mathFormula["padding-size"],
+      contents: [p1Obj],
+      type: "downLine"
+    };
+  },
+  // 绝对值
+  absoluteValue: function absoluteValue(p1) {
+    var p1Obj = formatBasic(p1);
+    return {
+      width: p1Obj.width + config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height,
+      contents: [p1Obj],
+      type: "absoluteValue"
+    };
+  },
+  // 定积分和不定积分
+  integral: function integral(p1, p2) {
+    var p3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var p4 = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+    var p1Obj = formatBasic(p1);
+    var p2Obj = formatBasic(p2);
+    var p3Obj = formatBasic(p3);
+    var p4Obj = formatBasic(p4);
+    return {
+      width: Math.max(p1Obj.width + p2Obj.width, p3Obj.width - 5, p4Obj.width) + 15 + config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height + p3Obj.height + p4Obj.height + config.mathFormula["padding-size"] * 2,
+      contents: [p1Obj, p2Obj, p3Obj, p4Obj],
+      type: "integral"
+    };
   }
 };
 
-// 引入QuickPaper核心代码，基于此进行二次开发
+// 引入QuickPaper，基于此进行二次开发
 quickPaper_min.directive("kpMathFormula", kpMathFormula); // 意图捕获方法集
 quickPaper_min.prototype.$mathFormula = mathFormula;
 

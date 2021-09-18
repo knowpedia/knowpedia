@@ -1,4 +1,4 @@
-// 引入QuickPaper核心代码，基于此进行二次开发
+// 引入QuickPaper，基于此进行二次开发
 import Knowpedia from 'quick-paper';
 
 /**

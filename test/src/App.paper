@@ -15,6 +15,11 @@
         <span kp-math-formula="mathFormulas.matrix2"></span>
         <span kp-math-formula="mathFormulas.division"></span>
         <span kp-math-formula="mathFormulas.equationSet"></span>
+        <span kp-math-formula="mathFormulas.upLine"></span>
+        <span kp-math-formula="mathFormulas.downLine"></span>
+        <span kp-math-formula="mathFormulas.absoluteValue"></span>
+        <span kp-math-formula="mathFormulas.integral1"></span>
+        <span kp-math-formula="mathFormulas.integral2"></span>
 
         <i>
             简单组合：
@@ -23,6 +28,11 @@
         <span kp-math-formula="mathFormulas.gen_limt"></span>
         <span kp-math-formula="mathFormulas.gen_sum"></span>
         <span kp-math-formula="mathFormulas.gen_matrix"></span>
+        <span kp-math-formula="mathFormulas.upLine1"></span>
+        <span kp-math-formula="mathFormulas.downLine1"></span>
+        <span kp-math-formula="mathFormulas.absoluteValue1"></span>
+        <span kp-math-formula="mathFormulas.integral3"></span>
+        <span kp-math-formula="mathFormulas.integral4"></span>
 
         <i>
             拼接组合：
@@ -32,6 +42,7 @@
         <span kp-math-formula="mathFormulas['bracket-small']"></span>
         <span kp-math-formula="mathFormulas['bracket-middle']"></span>
         <span kp-math-formula="mathFormulas['bracket-big']"></span>
+        <span kp-math-formula="mathFormulas.integral5"></span>
 
         <i>
             特殊位置：
@@ -79,6 +90,11 @@
                     [0, 1, 0, '|', 0],
                     [0, 0, 1, '|', 123],
                     [980, 0, 0, '|', 1]]),
+                upLine: this.$mathFormula.upLine('a'),
+                downLine: this.$mathFormula.downLine('a'),
+                absoluteValue: this.$mathFormula.absoluteValue('10+x'),
+                integral1: this.$mathFormula.integral('x+1', "dx", 9, 100),
+                integral2: this.$mathFormula.integral('x+1', "dx"),
 
                 // 简单组合
                 gen_limt: this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")),
@@ -87,6 +103,20 @@
                     [1, this.$mathFormula.gen("(x+1)*y")],
                     [0, 1]
                 ]),
+                upLine1: this.$mathFormula.upLine(this.$mathFormula.matrix([
+                    [1, this.$mathFormula.gen("(x+1)*y")],
+                    [0, 1]
+                ])),
+                downLine1: this.$mathFormula.gen(this.$mathFormula.join(this.$mathFormula.upLine(this.$mathFormula.matrix([
+                    [1, this.$mathFormula.gen("(x+1)*y")],
+                    [0, 1]
+                ])), "+", this.$mathFormula.downLine('a'))),
+                absoluteValue1: this.$mathFormula.join('x+', this.$mathFormula.absoluteValue(this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y"))), '=', 90),
+                integral3: this.$mathFormula.integral(this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")), "dx", 9, 100),
+                integral4: this.$mathFormula.integral(this.$mathFormula.matrix([
+                    [1, this.$mathFormula.gen("(x+1)*y")],
+                    [0, 1]
+                ]), "dx"),
 
                 // 拼接组合
                 array: this.$mathFormula.join('x', "+", this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y"))),
@@ -103,6 +133,7 @@
                     [1, this.$mathFormula.gen("(x+1)*y")],
                     [0, 1]
                 ]), "+10"), 'big'),
+                integral5: this.$mathFormula.integral(this.$mathFormula.limt("x->10", "(10x+1)*z"), this.$mathFormula.join("d", this.$mathFormula.bracket(this.$mathFormula.gen("(x+1)*y"), 'small')), 0, 100),
 
                 // 特殊位置
                 rightTop: this.$mathFormula.rightTop("X", 2),
@@ -114,7 +145,7 @@
                 rightBottom2: this.$mathFormula.rightBottom(this.$mathFormula.matrix([
                     [1, this.$mathFormula.gen("(x+1)*y")],
                     [0, 1]
-                ]), this.$mathFormula.limt("x->10", "(10x+1)*z")),
+                ]), this.$mathFormula.limt("x->10", "(10x+1)*z"))
             };
         }
     };

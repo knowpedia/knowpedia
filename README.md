@@ -114,6 +114,27 @@ this.$mathFormula.rightBottom(p1, p2);// p2在右下角
 this.$mathFormula.equationSet(...p);
 ```
 
+- 上下线
+
+```js
+this.$mathFormula.upLine(p1);// p1上面有线条
+this.$mathFormula.downLine(p1);// p1下面有线条
+```
+
+- 绝对值
+
+```js
+this.$mathFormula.absoluteValue(p1);
+```
+
+- 定积分和不定积分
+
+```js
+// p1是表达式，p2表示对谁积分
+// p3和p4可选，表示定积分积分范围（下、上）
+this.$mathFormula.integral(p1, p2, p3, p4);
+```
+
 开源协议
 ---------------------------------------
 [MIT](https://github.com/knowpedia/knowpedia/blob/master/LICENSE)
