@@ -20,6 +20,8 @@
         <span kp-math-formula="mathFormulas.absoluteValue"></span>
         <span kp-math-formula="mathFormulas.integral1"></span>
         <span kp-math-formula="mathFormulas.integral2"></span>
+        <span kp-math-formula="mathFormulas.listedOr"></span>
+        <span kp-math-formula="mathFormulas.listedAnd"></span>
 
         <i>
             简单组合：
@@ -95,6 +97,8 @@
                 absoluteValue: this.$mathFormula.absoluteValue('10+x'),
                 integral1: this.$mathFormula.integral('x+1', "dx", 9, 100),
                 integral2: this.$mathFormula.integral('x+1', "dx"),
+                listedOr:this.$mathFormula.listedOr('i=1','∞'),
+                listedAnd:this.$mathFormula.listedAnd('i=1','∞'),
 
                 // 简单组合
                 gen_limt: this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")),

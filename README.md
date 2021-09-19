@@ -135,6 +135,13 @@ this.$mathFormula.absoluteValue(p1);
 this.$mathFormula.integral(p1, p2, p3, p4);
 ```
 
+- 可列交和可列并
+
+```js
+this.$mathFormula.listedAnd(p1, p2); // 可列交
+this.$mathFormula.listedOr(p1, p2); // 可列并
+```
+
 开源协议
 ---------------------------------------
 [MIT](https://github.com/knowpedia/knowpedia/blob/master/LICENSE)

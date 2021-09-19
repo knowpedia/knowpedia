@@ -250,6 +250,42 @@ let doit = (el, binding) => {
 
                     break;
                 }
+                case "listedOr": {
+                    drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - config.mathFormula["padding-size"] - data.contents[0].height, data.contents[0]);
+                    drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + config.mathFormula["padding-size"], data.contents[1]);
+
+                    painter
+                        .beginPath()
+                        .moveTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height)
+                        .lineTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 25)
+                        .bezierCurveTo(
+                            x + data.width * 0.5 - 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 30,
+                            x + data.width * 0.5 + 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 30,
+                            x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 25
+                        )
+                        .lineTo(x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height)
+                        .stroke();
+
+                    break;
+                }
+                case "listedAnd": {
+                    drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - config.mathFormula["padding-size"] - data.contents[0].height, data.contents[0]);
+                    drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + config.mathFormula["padding-size"], data.contents[1]);
+
+                    painter
+                        .beginPath()
+                        .moveTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 35)
+                        .lineTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 10)
+                        .bezierCurveTo(
+                            x + data.width * 0.5 - 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 5,
+                            x + data.width * 0.5 + 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 5,
+                            x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 10
+                        )
+                        .lineTo(x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 35)
+                        .stroke();
+
+                    break;
+                }
                 default: {
                     console.error('未匹配的数据格式：');
                     console.error(x, y, data);

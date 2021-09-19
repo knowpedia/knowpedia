@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.4.0
+ * version 0.4.1
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sat Sep 18 2021 16:02:39 GMT+0800 (中国标准时间)
+ * Date:Sun Sep 19 2021 19:41:31 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1355,6 +1355,22 @@ var doit = function doit(el, binding) {
             break;
           }
 
+        case "listedOr":
+          {
+            drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - config.mathFormula["padding-size"] - data.contents[0].height, data.contents[0]);
+            drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + config.mathFormula["padding-size"], data.contents[1]);
+            painter.beginPath().moveTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height).lineTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 25).bezierCurveTo(x + data.width * 0.5 - 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 30, x + data.width * 0.5 + 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 30, x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 25).lineTo(x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height).stroke();
+            break;
+          }
+
+        case "listedAnd":
+          {
+            drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - config.mathFormula["padding-size"] - data.contents[0].height, data.contents[0]);
+            drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + config.mathFormula["padding-size"], data.contents[1]);
+            painter.beginPath().moveTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 35).lineTo(x + data.width * 0.5 - 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 10).bezierCurveTo(x + data.width * 0.5 - 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 5, x + data.width * 0.5 + 10, y + config.mathFormula["padding-size"] + data.contents[1].height + 5, x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 10).lineTo(x + data.width * 0.5 + 15, y + config.mathFormula["padding-size"] + data.contents[1].height + 35).stroke();
+            break;
+          }
+
         default:
           {
             console.error('未匹配的数据格式：');
@@ -2017,6 +2033,27 @@ var mathFormula = {
       height: p1Obj.height + p3Obj.height + p4Obj.height + config.mathFormula["padding-size"] * 2,
       contents: [p1Obj, p2Obj, p3Obj, p4Obj],
       type: "integral"
+    };
+  },
+  // 可列交和并
+  listedOr: function listedOr(p1, p2) {
+    var p1Obj = formatBasic(p1);
+    var p2Obj = formatBasic(p2);
+    return {
+      width: Math.max(p1Obj.width, p2Obj.width, 30) + config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height + p2Obj.height + 35 + config.mathFormula["padding-size"] * 2,
+      contents: [p1Obj, p2Obj],
+      type: 'listedOr'
+    };
+  },
+  listedAnd: function listedAnd(p1, p2) {
+    var p1Obj = formatBasic(p1);
+    var p2Obj = formatBasic(p2);
+    return {
+      width: Math.max(p1Obj.width, p2Obj.width, 30) + config.mathFormula["padding-size"] * 2,
+      height: p1Obj.height + p2Obj.height + 35 + config.mathFormula["padding-size"] * 2,
+      contents: [p1Obj, p2Obj],
+      type: 'listedAnd'
     };
   }
 };
