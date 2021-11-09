@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.4.1
+ * version 0.4.2
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sun Sep 19 2021 19:41:31 GMT+0800 (中国标准时间)
+ * Date:Tue Nov 09 2021 21:50:27 GMT+0800 (GMT+08:00)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1211,7 +1211,7 @@ var doit = function doit(el, binding) {
         case "limt":
           {
             // 先绘制极限文字和趋势
-            painter.fillText("limt", x + config.mathFormula['padding-size'] + data._help.leftWidth * 0.5, y + config.mathFormula['padding-size'] + data._help.limtSize.height * 0.5);
+            painter.fillText("lim", x + config.mathFormula['padding-size'] + data._help.leftWidth * 0.5, y + config.mathFormula['padding-size'] + data._help.limtSize.height * 0.5);
             drawFormula(x + config.mathFormula['padding-size'], y + data._help.limtSize.height + config.mathFormula['padding-size'], data.contents[0]); // 然后绘制表达式
 
             drawFormula(x + config.mathFormula['padding-size'] + data._help.leftWidth, y, data.contents[1]);

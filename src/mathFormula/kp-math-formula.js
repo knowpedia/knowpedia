@@ -57,7 +57,7 @@ let doit = (el, binding) => {
                 case "limt": {
 
                     // 先绘制极限文字和趋势
-                    painter.fillText("limt", x + config.mathFormula['padding-size'] + data._help.leftWidth * 0.5, y + config.mathFormula['padding-size'] + data._help.limtSize.height * 0.5);
+                    painter.fillText("lim", x + config.mathFormula['padding-size'] + data._help.leftWidth * 0.5, y + config.mathFormula['padding-size'] + data._help.limtSize.height * 0.5);
                     drawFormula(x + config.mathFormula['padding-size'], y + data._help.limtSize.height + config.mathFormula['padding-size'], data.contents[0]);
 
                     // 然后绘制表达式
