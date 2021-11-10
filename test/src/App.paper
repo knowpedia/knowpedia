@@ -3,6 +3,8 @@
     <h2>BUG修复</h2>
     <div>
         <span kp-math-formula="mathFormulas_bug[0]"></span>
+        <span kp-math-formula="mathFormulas_bug[1]"></span>
+        <span kp-math-formula="mathFormulas_bug[2]"></span>
     </div>
 
     <h2>开发测试</h2>
@@ -160,17 +162,19 @@
             };
 
             this.mathFormulas_bug = [
-                // this.$mathFormula.join(
-                this.$mathFormula.limt(
-                    "x→∞",
-                    this.$mathFormula.rightTop(
-                        this.$mathFormula.join(
-                            '(1+',
-                            this.$mathFormula.division('1', 'x'),
-                             ')'
-                        ),
-                    'x'))
-                // , '=e')
+                this.$mathFormula.join(
+                    this.$mathFormula.limt(
+                        "x→∞",
+                        this.$mathFormula.rightTop(
+                            this.$mathFormula.join(
+                                '(1+',
+                                this.$mathFormula.division('1', 'x'),
+                                ')'
+                            ),
+                            'x'))
+                    , '=e'),
+                this.$mathFormula.limt(this.$mathFormula.join("x→", this.$mathFormula.rightBottom('x', '0')), 'f(x)'),
+                this.$mathFormula.join("x→", this.$mathFormula.rightBottom('x', '0'))
             ];
         }
     };

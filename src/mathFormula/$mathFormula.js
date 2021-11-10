@@ -52,13 +52,17 @@ let mathFormula = {
         let p1Obj = formatBasic(p1);
         let p2Obj = formatBasic(p2);
 
+        // 对底部趋近进行兼容
+        p1Obj.width-=config.mathFormula["padding-size"] * 2;
+        p1Obj.height-=config.mathFormula["padding-size"] * 2;
+
         let limtSize = getContentSize('limt');
 
         let leftHeight = limtSize.height + p1Obj.height * 2;
 
         return {
             width: p1Obj.width + p2Obj.width + config.mathFormula["padding-size"] * 2,
-            height: leftHeight > p2Obj.height ? leftHeight : p2Obj.height,
+            height: (leftHeight > p2Obj.height ? leftHeight : p2Obj.height) * 0.5 + p2Obj.height * 0.5,
             contents: [p1Obj, p2Obj],
             type: 'limt',
             _help: {
