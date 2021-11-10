@@ -54,7 +54,7 @@ let mathFormula = {
 
         let limtSize = getContentSize('limt');
 
-        let leftHeight = limtSize.height + p1Obj.height;
+        let leftHeight = limtSize.height + p1Obj.height * 2;
 
         return {
             width: p1Obj.width + p2Obj.width + config.mathFormula["padding-size"] * 2,

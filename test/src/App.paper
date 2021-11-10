@@ -1,6 +1,11 @@
 <template>
 
-    <h2>数学格式</h2>
+    <h2>BUG修复</h2>
+    <div>
+        <span kp-math-formula="mathFormulas_bug[0]"></span>
+    </div>
+
+    <h2>开发测试</h2>
     <div>
 
         <i>
@@ -56,13 +61,15 @@
         <span kp-math-formula="mathFormulas.rightBottom2"></span>
 
     </div>
+
 </template>
 <script>
 
     export default {
         data() {
             return {
-                mathFormulas: {}
+                mathFormulas: {},
+                mathFormulas_bug: []
             };
         },
         mounted() {
@@ -97,8 +104,8 @@
                 absoluteValue: this.$mathFormula.absoluteValue('10+x'),
                 integral1: this.$mathFormula.integral('x+1', "dx", 9, 100),
                 integral2: this.$mathFormula.integral('x+1', "dx"),
-                listedOr:this.$mathFormula.listedOr('i=1','∞'),
-                listedAnd:this.$mathFormula.listedAnd('i=1','∞'),
+                listedOr: this.$mathFormula.listedOr('i=1', '∞'),
+                listedAnd: this.$mathFormula.listedAnd('i=1', '∞'),
 
                 // 简单组合
                 gen_limt: this.$mathFormula.limt("x->10", this.$mathFormula.gen("(x+1)*y")),
@@ -151,6 +158,20 @@
                     [0, 1]
                 ]), this.$mathFormula.limt("x->10", "(10x+1)*z"))
             };
+
+            this.mathFormulas_bug = [
+                // this.$mathFormula.join(
+                this.$mathFormula.limt(
+                    "x→∞",
+                    this.$mathFormula.rightTop(
+                        this.$mathFormula.join(
+                            '(1+',
+                            this.$mathFormula.division('1', 'x'),
+                             ')'
+                        ),
+                    'x'))
+                // , '=e')
+            ];
         }
     };
 </script>
