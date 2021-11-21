@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.4.4
+ * version 0.4.5
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Wed Nov 10 2021 13:34:12 GMT+0800 (中国标准时间)
+ * Date:Sun Nov 21 2021 19:16:42 GMT+0800 (GMT+08:00)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1284,7 +1284,7 @@ var doit = function doit(el, binding) {
             drawFormula(x + (data.width - data.contents[0].width) * 0.5, y + config.mathFormula["padding-size"], data.contents[0]);
             drawFormula(x + (data.width - data.contents[1].width) * 0.5, y + config.mathFormula["padding-size"] + data.contents[0].height + 2, data.contents[1]); // 再绘制中间的线条
 
-            painter.beginPath().lineTo(x + config.mathFormula["padding-size"], y + data.height * 0.5).lineTo(x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5).stroke();
+            painter.beginPath().lineTo(x + config.mathFormula["padding-size"], y + data.contents[0].height + 1).lineTo(x + data.width - config.mathFormula["padding-size"], y + data.contents[0].height + 1).stroke();
             break;
           }
 

@@ -5,6 +5,7 @@
         <span kp-math-formula="mathFormulas_bug[0]"></span>
         <span kp-math-formula="mathFormulas_bug[1]"></span>
         <span kp-math-formula="mathFormulas_bug[2]"></span>
+        <span kp-math-formula="mathFormulas_bug[3]"></span>
     </div>
 
     <h2>开发测试</h2>
@@ -174,7 +175,19 @@
                             'x'))
                     , '=e'),
                 this.$mathFormula.limt(this.$mathFormula.join("x→", this.$mathFormula.rightBottom('x', '0')), 'f(x)'),
-                this.$mathFormula.join("x→", this.$mathFormula.rightBottom('x', '0'))
+                this.$mathFormula.join("x→", this.$mathFormula.rightBottom('x', '0')),
+                this.$mathFormula.integral(
+                    this.$mathFormula.division(
+                        '1',
+                        this.$mathFormula.gen(
+                            this.$mathFormula.join(
+                                '1-',
+                                this.$mathFormula.rightTop('x', '2')
+                            )
+                        )
+                    ),
+                    'dx'
+                )
             ];
         }
     };

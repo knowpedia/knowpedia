@@ -155,8 +155,8 @@ let doit = (el, binding) => {
 
                     // 再绘制中间的线条
                     painter.beginPath()
-                        .lineTo(x + config.mathFormula["padding-size"], y + data.height * 0.5)
-                        .lineTo(x + data.width - config.mathFormula["padding-size"], y + data.height * 0.5)
+                        .lineTo(x + config.mathFormula["padding-size"], y + data.contents[0].height+1)
+                        .lineTo(x + data.width - config.mathFormula["padding-size"], y  + data.contents[0].height+1)
                         .stroke();
 
                     break;
