@@ -5,12 +5,12 @@
  *
  * author 你好2007 < https://hai2007.gitee.io/sweethome >
  *
- * version 0.4.5
+ * version 0.4.6
  *
  * Copyright (c) 2021 hai2007 走一步，再走一步。
  * Released under the MIT license
  *
- * Date:Sun Nov 21 2021 19:16:42 GMT+0800 (GMT+08:00)
+ * Date:Thu Dec 02 2021 16:41:39 GMT+0800 (中国标准时间)
  */
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -151,7 +151,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
     })(e);
   }
   /*!
-  * quick-paper v1.0.0
+  * quick-paper v1.2.0
   * (c) 2019-2021 你好2007 git+https://github.com/hai2007/quick-paper.git
   * License: MIT
   */
@@ -189,18 +189,15 @@ var quickPaper_min = createCommonjsModule(function (module) {
       }(e)) return !1;
       var n = t(e);
       return "[object Function]" === n || "[object AsyncFunction]" === n || "[object GeneratorFunction]" === n || "[object Proxy]" === n;
-    },
-        i = function i(e) {
-      return Array.isArray(e);
     };
 
-    function s(e) {
+    function i(e) {
       /^[_$]/.test(e) && console.error("The beginning of _ or $ is not allowed：" + e);
     }
 
-    var a = 1;
+    var s = 1;
 
-    function c(e) {
+    function a(e) {
       var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {},
           n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
           o = {},
@@ -234,7 +231,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
       };
     }
 
-    function l(e) {
+    function c(e) {
       for (var t = (e + "").toLowerCase(), n = (e + "").toUpperCase(), r = "", o = !1, i = 0; i < e.length; i++) {
         "-" != e[i] ? o ? (r += n[i], o = !1) : r += t[i] : o = !0;
       }
@@ -242,163 +239,177 @@ var quickPaper_min = createCommonjsModule(function (module) {
       return r;
     }
 
-    var p = {
+    var l = Object.prototype.toString;
+
+    var p = function p(e) {
+      var t = _typeof$1(e);
+
+      return "string" === t || "object" === t && null != e && !Array.isArray(e) && "[object String]" === function (e) {
+        return null == e ? void 0 === e ? "[object Undefined]" : "[object Null]" : l.call(e);
+      }(e);
+    },
+        u = function u(e) {
+      return Array.isArray(e);
+    },
+        f = {
       blankReg: new RegExp("[\\x20\\t\\r\\n\\f]"),
       blanksReg: /^[\x20\t\r\n\f]{0,}$/,
       identifier: /^[a-zA-Z_$][0-9a-zA-Z_$]{0,}$/
     },
-        u = ["+", "-", "*", "/", "%", "&", "|", "!", "?", ":", "[", "]", "(", ")", ">", "<", "="],
-        f = ["+", "-", "*", "/", "%", "&", "|", "!", "?", ":", ">", "<", "=", "<=", ">=", "==", "===", "!=", "!=="];
+        h = ["+", "-", "*", "/", "%", "&", "|", "!", "?", ":", "[", "]", "(", ")", ">", "<", "="],
+        d = ["+", "-", "*", "/", "%", "&", "|", "!", "?", ":", ">", "<", "=", "<=", ">=", "==", "===", "!=", "!=="];
 
-    function d(e, t, n) {
+    function v(e, t, n) {
       t = t.trim();
 
-      var o = -1,
-          i = null,
-          s = function s() {
-        return i = o++ < t.length - 1 ? t[o] : null;
+      var r = -1,
+          o = null,
+          i = function i() {
+        return o = r++ < t.length - 1 ? t[r] : null;
       },
-          a = function a(e) {
-        return t.substring(o, e + o > t.length ? t.length : e + o);
+          s = function s(e) {
+        return t.substring(r, e + r > t.length ? t.length : e + r);
       };
 
-      s();
+      i();
 
-      for (var c = []; !(o >= t.length);) {
-        if (u.indexOf(i) > -1) {
-          if (["&", "|", "="].indexOf(i) > -1) {
-            if (["==="].indexOf(a(3)) > -1) c.push(a(3)), o += 2, s();else {
-              if (!(["&&", "||", "=="].indexOf(a(2)) > -1)) throw new Error("Illegal expression : " + t + "\nstep='analyseExpress',index=" + o);
-              c.push(a(2)), o += 1, s();
+      for (var a = []; !(r >= t.length);) {
+        if (h.indexOf(o) > -1) {
+          if (["&", "|", "="].indexOf(o) > -1) {
+            if (["==="].indexOf(s(3)) > -1) a.push(s(3)), r += 2, i();else {
+              if (!(["&&", "||", "=="].indexOf(s(2)) > -1)) throw new Error("Illegal expression : " + t + "\nstep='analyseExpress',index=" + r);
+              a.push(s(2)), r += 1, i();
             }
-          } else ["!=="].indexOf(a(3)) > -1 ? (c.push(a(3)), o += 2, s()) : [">=", "<=", "!="].indexOf(a(2)) > -1 ? (c.push(a(2)), o += 1, s()) : (c.push(i), s());
-        } else if (['"', "'"].indexOf(i) > -1) {
-          var l = "",
-              d = i;
+          } else ["!=="].indexOf(s(3)) > -1 ? (a.push(s(3)), r += 2, i()) : [">=", "<=", "!="].indexOf(s(2)) > -1 ? (a.push(s(2)), r += 1, i()) : (a.push(o), i());
+        } else if (['"', "'"].indexOf(o) > -1) {
+          var c = "",
+              l = o;
 
-          for (s(); i != d;) {
-            if (o >= t.length) throw new Error("String unclosed error : " + t + "\nstep='analyseExpress',index=" + o);
-            l += i, s();
+          for (i(); o != l;) {
+            if (r >= t.length) throw new Error("String unclosed error : " + t + "\nstep='analyseExpress',index=" + r);
+            c += o, i();
           }
 
-          c.push(l + "@string"), s();
-        } else if (/\d/.test(i)) {
-          var h = "no";
-          l = i;
+          a.push(c + "@string"), i();
+        } else if (/\d/.test(o)) {
+          var u = "no";
+          c = o;
 
-          for (s(); o < t.length;) {
-            if (/\d/.test(i)) l += i, "error" == h && (h = "yes");else {
-              if ("." != i || "no" != h) break;
-              l += i, h = "error";
+          for (i(); r < t.length;) {
+            if (/\d/.test(o)) c += o, "error" == u && (u = "yes");else {
+              if ("." != o || "no" != u) break;
+              c += o, u = "error";
             }
-            s();
+            i();
           }
 
-          "error" == h && (l += "0"), c.push(+l);
-        } else if (["null", "true"].indexOf(a(4)) > -1) c.push({
+          "error" == u && (c += "0"), a.push(+c);
+        } else if (["null", "true"].indexOf(s(4)) > -1) a.push({
           "null": null,
           "true": !0
-        }[a(4)]), o += 3, s();else if (["false"].indexOf(a(5)) > -1) c.push({
+        }[s(4)]), r += 3, i();else if (["false"].indexOf(s(5)) > -1) a.push({
           "false": !1
-        }[a(5)]), o += 4, s();else if (["undefined"].indexOf(a(9)) > -1) c.push({
+        }[s(5)]), r += 4, i();else if (["undefined"].indexOf(s(9)) > -1) a.push({
           undefined: void 0
-        }[a(9)]), o += 8, s();else if (p.blankReg.test(i)) do {
-          s();
-        } while (p.blankReg.test(i) && o < t.length);else {
+        }[s(9)]), r += 8, i();else if (f.blankReg.test(o)) do {
+          i();
+        } while (f.blankReg.test(o) && r < t.length);else {
           var v = !1;
-          if ("." == i && (v = !0, s()), !p.identifier.test(i)) throw new Error("Illegal express : " + t + "\nstep='analyseExpress',index=" + o);
+          if ("." == o && (v = !0, i()), !f.identifier.test(o)) throw new Error("Illegal express : " + t + "\nstep='analyseExpress',index=" + r);
 
-          for (var y = 1; o + y <= t.length && p.identifier.test(a(y));) {
+          for (var y = 1; r + y <= t.length && f.identifier.test(s(y));) {
             y += 1;
           }
 
-          if (v) c.push("["), c.push(a(y - 1) + "@string"), c.push("]");else {
-            var _ = a(y - 1),
+          if (v) a.push("["), a.push(s(y - 1) + "@string"), a.push("]");else {
+            var _ = s(y - 1),
                 g = _ in n ? n[_] : e[_];
 
-            c.push(r(g) ? g + "@string" : g);
+            a.push(p(g) ? g + "@string" : g);
           }
-          o += y - 2, s();
+          r += y - 2, i();
         }
       }
 
-      for (var b = 0, m = 0; m < c.length; m++) {
-        ["+", "-"].indexOf(c[m]) > -1 && (0 == m || f.indexOf(c[b - 1]) > -1) ? (c[b++] = +(c[m] + c[m + 1]), m += 1) : c[b++] = c[m];
+      for (var b = 0, m = 0; m < a.length; m++) {
+        ["+", "-"].indexOf(a[m]) > -1 && (0 == m || d.indexOf(a[b - 1]) > -1) ? (a[b++] = +(a[m] + a[m + 1]), m += 1) : a[b++] = a[m];
       }
 
-      return c.length = b, c;
+      return a.length = b, a;
     }
 
-    var h = function h(e) {
+    var y = function y(e) {
       return "string" == typeof e ? e.replace(/@string$/, "") : e;
     };
 
-    function v(e) {
+    function _(e) {
       for (var t, n = 0, r = 0; r < e.length; r++) {
         "!" == e[r] ? e[n] = !e[++r] : e[n] = e[r], n += 1;
       }
 
-      if (1 == n) return h(e[0]);
+      if (1 == n) return y(e[0]);
 
       for (e.length = n, n = 0, r = 0; r < e.length; r++) {
-        "*" == e[r] ? e[n - 1] = h(e[n - 1]) * h(e[++r]) : "/" == e[r] ? e[n - 1] = h(e[n - 1]) / h(e[++r]) : "%" == e[r] ? e[n - 1] = h(e[n - 1]) % h(e[++r]) : e[n++] = e[r];
+        "*" == e[r] ? e[n - 1] = y(e[n - 1]) * y(e[++r]) : "/" == e[r] ? e[n - 1] = y(e[n - 1]) / y(e[++r]) : "%" == e[r] ? e[n - 1] = y(e[n - 1]) % y(e[++r]) : e[n++] = e[r];
       }
 
-      if (1 == n) return h(e[0]);
+      if (1 == n) return y(e[0]);
 
       for (e.length = n, n = 0, r = 0; r < e.length; r++) {
-        "+" == e[r] ? e[n - 1] = "string" == typeof (t = h(e[n - 1]) + h(e[++r])) ? t + "@string" : t : "-" == e[r] ? e[n - 1] = h(e[n - 1]) - h(e[++r]) : e[n++] = e[r];
+        "+" == e[r] ? e[n - 1] = "string" == typeof (t = y(e[n - 1]) + y(e[++r])) ? t + "@string" : t : "-" == e[r] ? e[n - 1] = y(e[n - 1]) - y(e[++r]) : e[n++] = e[r];
       }
 
-      if (1 == n) return h(e[0]);
+      if (1 == n) return y(e[0]);
 
       for (e.length = n, n = 0, r = 0; r < e.length; r++) {
-        ">" == e[r] ? e[n - 1] = h(e[n - 1]) > h(e[++r]) : "<" == e[r] ? e[n - 1] = h(e[n - 1]) < h(e[++r]) : "<=" == e[r] ? e[n - 1] = h(e[n - 1]) <= h(e[++r]) : ">=" == e[r] ? e[n - 1] = h(e[n - 1]) >= h(e[++r]) : e[n++] = e[r];
+        ">" == e[r] ? e[n - 1] = y(e[n - 1]) > y(e[++r]) : "<" == e[r] ? e[n - 1] = y(e[n - 1]) < y(e[++r]) : "<=" == e[r] ? e[n - 1] = y(e[n - 1]) <= y(e[++r]) : ">=" == e[r] ? e[n - 1] = y(e[n - 1]) >= y(e[++r]) : e[n++] = e[r];
       }
 
-      if (1 == n) return h(e[0]);
+      if (1 == n) return y(e[0]);
 
       for (e.length = n, n = 0, r = 0; r < e.length; r++) {
-        "==" == e[r] ? e[n - 1] = h(e[n - 1]) == h(e[++r]) : "===" == e[r] ? e[n - 1] = h(e[n - 1]) === h(e[++r]) : "!=" == e[r] ? e[n - 1] = h(e[n - 1]) != h(e[++r]) : "!==" == e[r] ? e[n - 1] = h(e[n - 1]) !== h(e[++r]) : e[n++] = e[r];
+        "==" == e[r] ? e[n - 1] = y(e[n - 1]) == y(e[++r]) : "===" == e[r] ? e[n - 1] = y(e[n - 1]) === y(e[++r]) : "!=" == e[r] ? e[n - 1] = y(e[n - 1]) != y(e[++r]) : "!==" == e[r] ? e[n - 1] = y(e[n - 1]) !== y(e[++r]) : e[n++] = e[r];
       }
 
-      if (1 == n) return h(e[0]);
+      if (1 == n) return y(e[0]);
 
       for (e.length = n, n = 0, r = 0; r < e.length; r++) {
-        "&&" == e[r] ? (e[n - 1] = h(e[n - 1]) && h(e[1 + r]), r += 1) : "||" == e[r] ? (e[n - 1] = h(e[n - 1]) || h(e[1 + r]), r += 1) : e[n++] = e[r];
+        "&&" == e[r] ? (e[n - 1] = y(e[n - 1]) && y(e[1 + r]), r += 1) : "||" == e[r] ? (e[n - 1] = y(e[n - 1]) || y(e[1 + r]), r += 1) : e[n++] = e[r];
       }
 
-      if (1 == n) return h(e[0]);
+      if (1 == n) return y(e[0]);
 
       for (e.length = n, n = 0, r = 0; r < e.length; r++) {
-        "?" == e[r] ? (e[n - 1] = h(e[n - 1]) ? h(e[r + 1]) : h(e[r + 3]), r += 3) : e[n++] = e[r];
+        "?" == e[r] ? (e[n - 1] = y(e[n - 1]) ? y(e[r + 1]) : y(e[r + 3]), r += 3) : e[n++] = e[r];
       }
 
-      if (1 == n) return h(e[0]);
+      if (1 == n) return y(e[0]);
       throw e.length = n, new Error("Unrecognized expression : [" + e.toString() + "]");
     }
 
-    var y = function y(e) {
+    var g = function g(e) {
       for (var t = !0; t;) {
         t = !1;
 
-        for (var n = [], o = [], i = !1, s = 0; s < e.length; s++) {
-          if ("[" == e[s] && 0 != s && "]" != e[s - 1]) {
-            if (i) {
+        for (var n = [], r = [], o = !1, i = 0; i < e.length; i++) {
+          if ("[" == e[i] && 0 != i && "]" != e[i - 1]) {
+            if (o) {
               n.push("[");
 
-              for (var a = 0; a < o.length; a++) {
-                n.push(o[a]);
+              for (var s = 0; s < r.length; s++) {
+                n.push(r[s]);
               }
-            } else i = !0;
+            } else o = !0;
 
-            o = [];
-          } else if ("]" == e[s] && i) {
+            r = [];
+          } else if ("]" == e[i] && o) {
             t = !0;
-            var c = v(o),
-                l = n[n.length - 1][c];
-            n[n.length - 1] = r(l) ? l + "@string" : l, i = !1;
-          } else i ? o.push(e[s]) : n.push(e[s]);
+
+            var a = _(r),
+                c = n[n.length - 1][a];
+
+            n[n.length - 1] = p(c) ? c + "@string" : c, o = !1;
+          } else o ? r.push(e[i]) : n.push(e[i]);
         }
 
         e = n;
@@ -406,39 +417,39 @@ var quickPaper_min = createCommonjsModule(function (module) {
 
       return e;
     },
-        _ = function _(e) {
+        b = function b(e) {
       for (var t = [], n = [], r = 0; r < e.length; r++) {
-        "[" == e[r] ? n = [] : "]" == e[r] ? t.push(v(n)) : n.push(e[r]);
+        "[" == e[r] ? n = [] : "]" == e[r] ? t.push(_(n)) : n.push(e[r]);
       }
 
       return t;
     };
 
-    function g(e, t, n) {
-      var o,
-          i = function e(t, n, o) {
+    function m(e, t, n) {
+      var r,
+          o = function e(t, n, r) {
         if (n.indexOf("(") > -1) {
-          for (var i = [], s = [], a = 0, c = 0; c < n.length; c++) {
-            if ("(" == n[c]) a > 0 && s.push("("), a += 1;else if (")" == n[c]) {
-              if (a > 1 && s.push(")"), 0 == (a -= 1)) {
-                var l = v(e(t, s));
-                i.push(r(l) ? l + "@string" : l), s = [];
+          for (var o = [], i = [], s = 0, a = 0; a < n.length; a++) {
+            if ("(" == n[a]) s > 0 && i.push("("), s += 1;else if (")" == n[a]) {
+              if (s > 1 && i.push(")"), 0 == (s -= 1)) {
+                var c = _(e(t, i));
+
+                o.push(p(c) ? c + "@string" : c), i = [];
               }
-            } else a > 0 ? s.push(n[c]) : i.push(n[c]);
+            } else s > 0 ? i.push(n[a]) : o.push(n[a]);
           }
 
-          n = i;
+          n = o;
         }
 
-        return y(n);
+        return g(n);
       }(e, t);
 
-      if ("[" != i[0]) o = [v(i)];else if ("]" == i[i.length - 1]) o = _(i);else {
-        var s = i.lastIndexOf("]"),
-            a = _(i.slice(0, s + 1)),
-            c = i.slice(s + 1);
-
-        c.unshift(function (e, t, n) {
+      if ("[" != o[0]) r = [_(o)];else if ("]" == o[o.length - 1]) r = b(o);else {
+        var i = o.lastIndexOf("]"),
+            s = b(o.slice(0, i + 1)),
+            a = o.slice(i + 1);
+        a.unshift(function (e, t, n) {
           for (var r = (t[0] in n) ? n[t[0]] : e[t[0]], o = 1; o < t.length; o++) {
             try {
               r = r[t[o]];
@@ -453,9 +464,9 @@ var quickPaper_min = createCommonjsModule(function (module) {
           }
 
           return r;
-        }(e, a, n)), o = [v(c)];
+        }(e, s, n)), r = [_(a)];
       }
-      return o;
+      return r;
     }
     /*!
        * 🔪 - 设置或获取指定对象上字符串表达式对应的值
@@ -468,20 +479,20 @@ var quickPaper_min = createCommonjsModule(function (module) {
        */
 
 
-    var b = function b(e, t, n) {
+    var x = function x(e, t, n) {
       arguments.length < 3 && (n = {});
-      var r = d(e, t, n),
-          o = g(e, r, n);
+      var r = v(e, t, n),
+          o = m(e, r, n);
       if (o.length > 1) throw new Error("Illegal expression : " + t + "\nstep='evalExpress',path=" + o + ",expressArray=" + r);
       return o[0];
     };
 
-    function m(e, t, n) {
+    function O(e, t, n) {
       window.attachEvent ? e.attachEvent("on" + t, n) : e.addEventListener(t, n, !1);
     }
 
-    function x(e) {
-      if (!(this instanceof x)) throw new Error("QuickPaper is a constructor and should be called with the `new` keyword");
+    function $(e) {
+      if (!(this instanceof $)) throw new Error("QuickPaper is a constructor and should be called with the `new` keyword");
       var t;
       this._name = e.name || "noname", this.$$lifecycle(e.beforeCreate), this.$$init(e), this.$$lifecycle("created"), t = this._el, n([1, 9, 11], t) && this.$$mount();
     }
@@ -490,8 +501,8 @@ var quickPaper_min = createCommonjsModule(function (module) {
       e.prototype.$$init = function () {
         var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
 
-        for (var t in this._options = e, this._uid = a++, this._data = o(e.data) ? e.data() : e.data, this._el = e.el, this.__isMounted = !1, this.__isDestroyed = !1, e.methods) {
-          s(t), this[t] = e.methods[t];
+        for (var t in this._options = e, this._uid = s++, this._data = o(e.data) ? e.data() : e.data, this._el = e.el, this.__isMounted = !1, this.__isDestroyed = !1, e.methods) {
+          i(t), this[t] = e.methods[t];
         }
 
         for (var n in this._data) {
@@ -502,23 +513,23 @@ var quickPaper_min = createCommonjsModule(function (module) {
           this.__componentLib_scope[r] = e.component[r];
         }
 
-        for (var i in this.__directiveLib_scope = {}, e.directive) {
-          this.__directiveLib_scope[i] = e.directive[i];
+        for (var a in this.__directiveLib_scope = {}, e.directive) {
+          this.__directiveLib_scope[a] = e.directive[a];
         }
       };
-    }(x), function (e) {
+    }($), function (e) {
       e.prototype.$$lifecycle = function (e) {
         o(e) ? e() : ["created", "beforeMount", "mounted", "beforeUpdate", "updated", "beforeDestroy", "destroyed"].indexOf(e) > -1 && o(this._options[e]) && this._options[e].call(this);
       };
-    }(x), function (e) {
+    }($), function (e) {
       e.prototype.$$mountComponent = function () {
-        this.$$lifecycle("beforeMount"), this._vnode = this.$$render(c), this.__directiveTask = [], this.__componentTask = [], this.__bindTextTask = [], function e(t, n, r, o) {
+        this.$$lifecycle("beforeMount"), this._vnode = this.$$render(a), this.__directiveTask = [], this.__componentTask = [], this.__bindTextTask = [], function e(t, n, r, o) {
           var i,
-              s = b(t, n);
+              s = x(t, n);
 
           if (s) {
             if ("none" == s.type) {
-              var a = l(s.tagName);
+              var a = c(s.tagName);
               t.__componentLib[a] || t.__componentLib_scope[a] ? (s.options = t.__componentLib[a] || t.__componentLib_scope[a], s.type = "component") : s.type = "tag";
             }
 
@@ -526,14 +537,14 @@ var quickPaper_min = createCommonjsModule(function (module) {
               i = document.createElement("quick-paper-component"), r.appendChild(i), s.options.el = i, "render" in s.options || (s.options.render = function (e) {
                 return e("quick-paper-component", {}, []);
               }), s.instance = new o(s.options), s.instance.__parent = t;
-              var c = {};
+              var l = {};
 
               for (var p in s.attrs) {
-                /^data-quickpaper-/.test(p) || (/^:/.test(p) ? c[p.replace("q-bind" + p)] = s.attrs[p] : /^@/.test(p) ? c[p.replace(p.replace(/^@/, "q-on:"))] = s.attrs[p] : c[p] = s.attrs[p]);
+                /^data-quickpaper-/.test(p) || (/^:/.test(p) ? l[p.replace("q-bind" + p)] = s.attrs[p] : /^@/.test(p) ? l[p.replace(p.replace(/^@/, "q-on:"))] = s.attrs[p] : l[p] = s.attrs[p]);
               }
 
               var u = {
-                attrs: c,
+                attrs: l,
                 instance: s.instance
               };
 
@@ -544,28 +555,28 @@ var quickPaper_min = createCommonjsModule(function (module) {
 
               t.__componentTask.push(u);
             } else if ("tag" == s.type) {
-              for (var d in i = document.createElement(s.tagName), "Quick-Paper-COMPONENT" == r.nodeName || "Quick-Paper-COMPONENT" == r._nodeName ? (m = i, (g = r).parentNode.replaceChild(m, g), t._el = i) : r.appendChild(i), s.attrs) {
-                var h = s.attrs[d],
-                    v = (d + ":").split(":"),
-                    y = t.__directiveLib[l(v[0])] || t.__directiveLib_scope[l(v[0])];
+              for (var h in i = document.createElement(s.tagName), "Quick-Paper-COMPONENT" == r.nodeName || "Quick-Paper-COMPONENT" == r._nodeName ? (b = i, (g = r).parentNode.replaceChild(b, g), t._el = i) : r.appendChild(i), s.attrs) {
+                var d = s.attrs[h],
+                    v = (h + ":").split(":"),
+                    y = t.__directiveLib[c(v[0])] || t.__directiveLib_scope[c(v[0])];
 
                 y ? t.__directiveTask.push(_objectSpread(_objectSpread({
                   el: i
                 }, y), {}, {
-                  value: h,
+                  value: d,
                   type: v[1]
-                })) : i.setAttribute(d, h);
+                })) : i.setAttribute(h, d);
               }
 
               for (var _ = 0; _ < s.children.length; _++) {
                 e(t, n + ".children[" + _ + "]", i, o);
               }
-            } else "text" == s.type ? ((i = document.createTextNode("")).textContent = s.content.replace(/↵/g, "\n"), r.appendChild(i)) : "bindText" == s.type ? ((i = document.createTextNode("")).textContent = b(t, s.content).replace(/↵/g, "\n"), r.appendChild(i), t.__bindTextTask.push({
+            } else "text" == s.type ? ((i = document.createTextNode("")).textContent = s.content.replace(/↵/g, "\n"), r.appendChild(i)) : "bindText" == s.type ? ((i = document.createTextNode("")).textContent = x(t, s.content).replace(/↵/g, "\n"), r.appendChild(i), t.__bindTextTask.push({
               el: i,
               content: s.content
             })) : console.error("Type not expected：" + s.type);
 
-            var g, m;
+            var g, b;
           } else console.error("vnode is undefined!");
         }(this, "_vnode", this._el, e);
 
@@ -576,7 +587,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
             var r = void 0;
 
             try {
-              r = b(this, n.value);
+              r = x(this, n.value);
             } catch (e) {}
 
             n.inserted(n.el, {
@@ -590,7 +601,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
 
         !function (e) {
           var t = function t(_t) {
-            s(_t), o(e[_t]) && console.error('Data property "' + _t + '" has already been defined as a Method.');
+            i(_t), o(e[_t]) && console.error('Data property "' + _t + '" has already been defined as a Method.');
             var n = e._data[_t];
             e[_t] = n, Object.defineProperty(e, _t, {
               get: function get() {
@@ -616,7 +627,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
             var r = void 0;
 
             try {
-              r = b(this, n.value);
+              r = x(this, n.value);
             } catch (e) {}
 
             n.update(n.el, {
@@ -630,7 +641,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
 
         for (var i = 0; i < this.__bindTextTask.length; i++) {
           var s = this.__bindTextTask[i],
-              a = b(this, s.content).replace(/↵/g, "\n");
+              a = x(this, s.content).replace(/↵/g, "\n");
           s.el.textContent != a && (s.el.textContent = a);
         }
 
@@ -652,23 +663,38 @@ var quickPaper_min = createCommonjsModule(function (module) {
           o(t["delete"]) && t["delete"](t.el, {
             target: this,
             exp: t.value,
-            value: b(this, t.value),
+            value: x(this, t.value),
             type: t.type
           });
         }
 
         this.$$lifecycle("destroyed");
       };
-    }(x);
+    }($), function (e) {
+      e.prototype.__directiveLib = {}, e.prototype.__componentLib = {}, function (e) {
+        e.directive = function (t, n) {
+          e.prototype.__directiveLib[t] = n;
+        }, e.component = function (t, n) {
+          e.prototype.__componentLib[t] = n;
+        };
+      }(e), function (e) {
+        e.use = function (t) {
+          t.install.call(t, e);
+        };
+      }(e);
+    }($), $.prototype.$$mount = function () {
+      if (!o(this._options.render)) throw new Error("options.render needs to be a function");
+      this.$$render = this._options.render, this.$$mountComponent();
+    };
 
-    var $ = function $(e, t) {
+    var w = function w(e, t) {
       r(t.type) && t.type.length > 0 ? e.getAttribute(t.type) != t.value && e.setAttribute(t.type, t.value) : e.value == t.value && e.textContent == t.value || (e.value = e.textContent = t.value);
     },
-        O = {
-      inserted: $,
-      update: $
+        j = {
+      inserted: w,
+      update: w
     },
-        w = {
+        k = {
       inserted: function inserted(e, t) {
         for (var n = t.type.split("."), r = {
           prevent: !1,
@@ -678,7 +704,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
           r[n[o]] = !0;
         }
 
-        m(e, n[0], function o(i) {
+        O(e, n[0], function o(i) {
           r.stop && function (e) {
             (e = e || window.event).stopPropagation ? e.stopPropagation() : e.cancelBubble = !0;
           }(i), r.prevent && function (e) {
@@ -696,26 +722,26 @@ var quickPaper_min = createCommonjsModule(function (module) {
             f.length > 0 && (u = f.split(","));
           }
 
-          for (var d = 0; d < u.length; d++) {
-            var h = u[d];
-            h = b(t.target, h), p.push(h);
+          for (var h = 0; h < u.length; h++) {
+            var d = u[h];
+            d = x(t.target, d), p.push(d);
           }
 
           p.push(i), t.target[l[1]].apply(t.target, p), r.once && (s = e, a = n[0], c = o, window.detachEvent ? s.detachEvent("on" + a, c) : s.removeEventListener(a, c, !1));
         });
       }
     },
-        j = {
+        T = {
       inserted: function inserted(e, t) {
-        e.value = t.value, m(e, "input", function () {
+        e.value = t.value, O(e, "input", function () {
           !function (e, t, n, r) {
             arguments.length < 3 && (r = {});
 
-            for (var o = d(e, t, r), s = g(e, o, r), a = e, c = 0; c < s.length - 1; c++) {
-              s[c] in a || (a[s[c]] = i(a) ? [] : {}), a = a[s[c]];
+            for (var o = v(e, t, r), i = m(e, o, r), s = e, a = 0; a < i.length - 1; a++) {
+              i[a] in s || (s[i[a]] = u(s) ? [] : {}), s = s[i[a]];
             }
 
-            a[s[s.length - 1]] = n;
+            s[i[i.length - 1]] = n;
           }(t.target, "." + t.exp, e.value);
         });
       },
@@ -724,19 +750,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
       }
     };
 
-    !function (e) {
-      e.prototype.__directiveLib = {}, e.prototype.__componentLib = {}, function (e) {
-        e.directive = function (t, n) {
-          e.prototype.__directiveLib[t] = n;
-        }, e.component = function (t, n) {
-          e.prototype.__componentLib[t] = n;
-        };
-      }(e), function (e) {
-        e.use = function (t) {
-          t.install.call(t, e);
-        };
-      }(e);
-    }(x), x.directive("qBind", O), x.directive("qOn", w), x.directive("qModel", j), x.component("component", {
+    $.directive("qBind", j), $.directive("qOn", k), $.directive("qModel", T), $.component("component", {
       name: "component",
       data: function data() {
         return {
@@ -753,10 +767,7 @@ var quickPaper_min = createCommonjsModule(function (module) {
           }
         }
       }
-    }), x.prototype.$$mount = function () {
-      if (!o(this._options.render)) throw new Error("options.render needs to be a function");
-      this.$$render = this._options.render, this.$$mountComponent();
-    }, "object" === ( _typeof$1(module)) && "object" === _typeof$1(module.exports) ? module.exports = x : window.QuickPaper = x;
+    }), module.exports = $;
   }();
 });
 
