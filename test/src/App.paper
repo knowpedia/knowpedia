@@ -1,5 +1,9 @@
 <template>
 
+    <h1>
+        一、mathFormula
+    </h1>
+
     <h2>BUG修复</h2>
     <div>
         <span kp-math-formula="mathFormulas_bug[0]"></span>

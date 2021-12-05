@@ -1,5 +1,5 @@
 # knowpedia
-为knowpedia项目定制的前端框架。
+为Quick-Paper提供书籍编辑常用插件库。
 
 <p align="center">
     <img src='./knowpedia.png'>
@@ -18,13 +18,39 @@
 
 ## How to use?
 
-本项目是基于[Quick Paper](https://github.com/hai2007/quick-paper)进行的二次开发，专门为编辑特殊文本而进行了定制化，因此，基本的使用说明请查看[Quick Paper文档](https://hai2007.gitee.io/quick-paper)。
+本项目是为[Quick Paper](https://github.com/hai2007/quick-paper)提供的一些插件库，下面的一些你在使用Quick-Paper可用的扩展功能。
 
-## 特有功能
+在说明具体的插件之前，先来补充一下babel打包相关的问题。
 
-下面，我们来列举出 ```knowpedia``` 框架特有的功能！
+如果你使用webpack配合babel进行项目打包，由于部分包采用了let等es6+语法，为了可以正常打包，你需要修改webpack的配置，参考如下：
+
+```
+......
+rules: [{
+    test: /\.js$/,
+    exclude: function (modulePath) {
+        return (
+            /node_modules/.test(modulePath) &&
+            !/knowpedia/.test(modulePath)
+        );
+    },
+    loader: "babel-loader"
+},
+......
+```
+
+其次，请确保你使用了babel.config.js而不是.babelrc，否则较高版本的babel可能依旧不会对你忽略的node_modules中的包进行转义。
 
 ### 数学公式
+
+```
+import QuickPaper from 'quick-paper';
+import mathFormula from 'knowpedia/mathFormula';
+
+QuickPaper.use(mathFormula);
+```
+
+引入并```use```后即可使用。
 
 <img src='./images/mathFormula.png'>
 

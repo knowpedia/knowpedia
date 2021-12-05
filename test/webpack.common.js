@@ -1,5 +1,4 @@
-const KnowpediaLoaderPlugin = require('knowpedia/loader-plug/index.js');
-const path = require('path');
+const QuickPaperLoaderPlugin = require('quick-paper/loader-plug/index.js');
 
 module.exports = {
     entry: ['./src/entry.js'],
@@ -7,20 +6,20 @@ module.exports = {
         path: __dirname,
         filename: 'build/main.js'
     },
-    resolve: {
-        alias: {
-            'knowpedia': path.resolve('../dist/knowpedia.js')
-        }
-    },
     module: {
         rules: [{
             test: /\.js$/,
-            exclude: /node_modules/,
+            exclude: function (modulePath) {
+                return (
+                    /node_modules/.test(modulePath) &&
+                    !/knowpedia/.test(modulePath)
+                );
+            },
             loader: "babel-loader"
         }, {
             test: /\.paper$/,
             exclude: /node_modules/,
-            loader: ['knowpedia/loader/index.js']
+            loader: ['quick-paper/loader/index.js']
         }, {
             test: /\.(png|jpg|jpeg|gif|bmp)$/,
             loader: [{
@@ -32,10 +31,10 @@ module.exports = {
             }]
         }, {
             test: /\.(css|scss)$/,
-            loader: ['knowpedia/style-loader/index.js', 'css-loader', 'postcss-loader', './scss-loader.js']
+            loader: ['quick-paper/style-loader/index.js', 'css-loader', 'postcss-loader', './scss-loader.js']
         }]
     },
     plugins: [
-        new KnowpediaLoaderPlugin()
+        new QuickPaperLoaderPlugin()
     ]
 };
