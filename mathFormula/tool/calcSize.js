@@ -1,7 +1,5 @@
 
-// 主要用于计算文字的宽
-
-import xhtml from '@hai2007/tool/xhtml';
+import xhtml from '@hai2007/browser/xhtml';
 import config from '../config';
 
 let helpHidden = null;

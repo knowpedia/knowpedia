@@ -71,3 +71,7 @@ v1.0.0：
     date:2021-12-05
     changes:
       - 定位由框架修改为为Quick-Paper提供书籍编辑常用插件库
+v1.1.0：
+    date:2021-12-28
+    changes:
+      - 为兼容EtcPack打包工具进行改造
